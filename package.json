@@ -11,16 +11,17 @@
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest"
   },
-  "keywords": ["design-system", "react", "typescript", "storybook"],
+  "keywords": [
+    "design-system",
+    "react",
+    "typescript",
+    "storybook"
+  ],
   "author": "Ran Zabaro",
   "license": "MIT",
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.6.7",
-    "@storybook/addon-interactions": "^7.6.7",
-    "@storybook/addon-links": "^7.6.7",
-    "@storybook/blocks": "^7.6.7",
-    "@storybook/react": "^7.6.7",
-    "@storybook/react-vite": "^7.6.7",
+    "@storybook/addon-links": "^9.0.15",
+    "@storybook/react-vite": "^9.0.15",
     "@storybook/testing-library": "^0.2.2",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
@@ -29,11 +30,12 @@
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-storybook": "^0.6.15",
-    "storybook": "^7.6.7",
+    "eslint-plugin-storybook": "^9.0.15",
+    "storybook": "^9.0.15",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
-    "vitest": "^1.1.0"
+    "vitest": "^1.1.0",
+    "@storybook/addon-docs": "^9.0.15"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -43,4 +45,4 @@
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   }
-} 
+}
