@@ -20,9 +20,9 @@
   "author": "Ran Zabaro",
   "license": "MIT",
   "devDependencies": {
+    "@storybook/addon-docs": "^9.0.15",
     "@storybook/addon-links": "^9.0.15",
     "@storybook/react-vite": "^9.0.15",
-    "@storybook/testing-library": "^0.2.2",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
@@ -34,12 +34,11 @@
     "storybook": "^9.0.15",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
-    "vitest": "^1.1.0",
-    "@storybook/addon-docs": "^9.0.15"
+    "vitest": "^1.1.0"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

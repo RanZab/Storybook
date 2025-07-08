@@ -7,7 +7,9 @@ export const colors = {
   // Primary colors - Brand colors for WSC Sports
   primary: {
     100: '#F1FF6C',  // Light yellow
+    200: '#F4FF99',  // Hover state (extracted from Figma)
     300: '#E5FF00',  // Base yellow (main brand color)
+    400: '#C2FF00',  // Active state (extracted from Figma)
     500: '#B9D300',  // Yellow-green
     700: '#3F3F2B',  // Dark green
     900: '#333333',  // Dark gray
@@ -29,10 +31,11 @@ export const colors = {
   
   // Alert colors - Error states
   alert: {
-    100: '#FF5368',  // Light red
-    300: '#FF364E',  // Medium red
-    500: '#AF001B',  // Dark red
+    100: '#FF6161',  // Light red (hover)
+    300: '#FF3131',  // Medium red (default)
+    500: '#B72C2C',  // Dark red (active)
     700: '#500009',  // Very dark red
+    900: '#8E1616',  // Disabled state
   },
   
   // Warning colors - Caution states

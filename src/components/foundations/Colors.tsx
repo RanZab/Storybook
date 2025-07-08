@@ -43,7 +43,7 @@ interface ColorSectionProps {
   colors: { label: string; color: string; code: string }[];
 }
 
-const ColorSection: React.FC<ColorSectionProps> = ({ title, description, colors }) => {
+const ColorSection: React.FC<ColorSectionProps> = ({ title, description, colorList }) => {
   return (
     <div style={{ marginBottom: '40px' }}>
       <div style={{ display: 'flex', gap: '52px', alignItems: 'flex-start' }}>
@@ -82,7 +82,7 @@ const ColorSection: React.FC<ColorSectionProps> = ({ title, description, colors 
           flexWrap: 'wrap',
           flex: 1
         }}>
-          {colors.map((colorItem, index) => (
+          {colorList.map((colorItem, index) => (
             <ColorSwatch
               key={index}
               color={colorItem.color}
@@ -232,7 +232,7 @@ export const Colors: React.FC<ColorsProps> = () => {
         <ColorSection
           title="Primary"
           description="The primary color is our brand color, shaping the look and feel across interactive elements like buttons, links, and inputs."
-          colors={primaryColors}
+          colorList={primaryColors}
         />
       </div>
 
@@ -240,28 +240,28 @@ export const Colors: React.FC<ColorsProps> = () => {
       <ColorSection
         title="Neutral"
         description="Neutral color anchors the system; nearly every UI element- text, form fields, surfaces, and dividers- displays natural hues."
-        colors={neutralColors}
+        colorList={neutralColors}
       />
 
       {/* Alert Colors */}
       <ColorSection
         title="Alert"
         description="Error colors signal negative or destructive actions, marking error states like action failures, lost connections, etc."
-        colors={alertColors}
+        colorList={alertColors}
       />
 
       {/* Warning Colors */}
       <ColorSection
         title="Warning"
         description="Warning colors indicate that an action may be destructive or on hold, grabbing user attention in confirmations."
-        colors={warningColors}
+        colorList={warningColors}
       />
 
       {/* Success Colors */}
       <ColorSection
         title="Success"
         description="Success colors communicate a positive action, positive trend, or a successful confirmation."
-        colors={successColors}
+        colorList={successColors}
       />
     </div>
   );

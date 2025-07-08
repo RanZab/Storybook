@@ -9,6 +9,11 @@ export * from './tokens';
 // Export foundation components
 export * from './components/foundations/Spacing';
 export * from './components/foundations/Colors';
+export * from './components/foundations/Typography';
 
-// Export components (will be added as we build them)
-// export * from './components'; 
+// Export interactive components
+export * from './components/Button';
+export * from './components/TextInput';
+
+// Export all components
+export * from './components'; 

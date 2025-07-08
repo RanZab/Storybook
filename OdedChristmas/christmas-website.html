@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Wintry Piano Wonderland - Christmas Carols Reimagined by Oded Essner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2D5530;
+        }
+
+        .cursive { font-family: 'Dancing Script', cursive; }
+        .elegant { font-family: 'Playfair Display', serif; }
+
+        /* Colors */
+        .bg-pastel-green { background-color: #E8F5E8; }
+        .bg-pastel-purple { background-color: #F0E8F7; }
+        .bg-pastel-pink { background-color: #FDF2F8; }
+        .bg-pastel-cream { background-color: #FFF8F0; }
+        .bg-christmas-red { background-color: #B91C1C; }
+        .bg-christmas-green { background-color: #2D5530; }
+        .text-christmas-green { color: #2D5530; }
+        .text-christmas-red { color: #B91C1C; }
+        .text-christmas-gold { color: #F59E0B; }
+        .text-white { color: white; }
+
+        /* Gradients */
+        .bg-gradient-1 {
+            background: linear-gradient(135deg, #E8F5E8 0%, #F0E8F7 50%, #FDF2F8 100%);
+        }
+        .bg-gradient-2 {
+            background: linear-gradient(135deg, #FDF2F8 0%, #FFF8F0 50%, #E8F5E8 100%);
+        }
+        .bg-gradient-3 {
+            background: linear-gradient(135deg, #E8F5E8 0%, #F0E8F7 50%, #FDF2F8 100%);
+        }
+
+        /* Animations */
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-gentle-float { animation: gentleFloat 6s ease-in-out infinite; }
+        .animate-twinkle { animation: twinkle 2s ease-in-out infinite alternate; }
+        .animate-fade-in { animation: fadeIn 1s ease-out; }
+
+        /* Layout */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .section { padding: 5rem 1rem; }
+        .grid { display: grid; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .text-center { text-align: center; }
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .overflow-hidden { overflow: hidden; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .decorative {
+            position: absolute;
+            opacity: 0.3;
+            font-size: 2rem;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin-bottom: 2rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: #B91C1C;
+            color: white;
+        }
+
+        .btn-secondary {
+            border: 2px solid #2D5530;
+            color: #2D5530;
+            background: transparent;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Song Cards */
+        .song-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .song-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .youtube-embed {
+            width: 100%;
+            height: 200px;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        /* Purchase Section */
+        .price-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #B91C1C;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section { padding: 3rem 1rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero bg-gradient-1">
+        <!-- Decorative Elements -->
+        <div class="decorative animate-gentle-float" style="top: 10%; left: 5%; color: #2D5530;">♪</div>
+        <div class="decorative animate-gentle-float" style="top: 20%; right: 10%; color: #B91C1C; animation-delay: 1s;">♫</div>
+        <div class="decorative animate-gentle-float" style="bottom: 30%; left: 10%; color: #F59E0B; animation-delay: 2s;">♬</div>
+        <div class="decorative animate-twinkle" style="bottom: 0; right: 5%; font-size: 4rem; color: #2D5530; opacity: 0.2;">🎄</div>
+        
+        <div class="hero-content animate-fade-in">
+            <h1 class="cursive text-christmas-green">
+                A Wintry Piano<br>
+                <span class="text-christmas-red">Wonderland</span>
+            </h1>
+            
+            <p class="elegant text-christmas-green">
+                Christmas Carols Reimagined by<br>
+                <span class="cursive text-christmas-red" style="font-size: 1.5em;">Oded Essner</span>
+            </p>
+            
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.8;">
+                Experience beloved Christmas classics through beautiful piano arrangements, 
+                accompanied by whimsical illustrations that capture the nostalgic joy of the holiday season.
+            </p>
+            
+            <div>
+                <a href="#purchase" class="btn btn-primary">🎵 Listen & Buy Now</a>
+                <a href="#songs" class="btn btn-secondary">🎼 Preview Songs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Song Gallery -->
+    <section id="songs" class="section bg-gradient-2">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <h2 class="cursive text-christmas-green" style="font-size: 3rem; margin-bottom: 1rem;">Featured Songs</h2>
+                <div style="width: 100px; height: 4px; background-color: #F59E0B; margin: 0 auto; border-radius: 2px;"></div>
+            </div>
+            
+            <div class="grid grid-3">
+                <!-- Song 1 -->
+                <div class="song-card">
+                    <iframe class="youtube-embed" src="https://www.youtube.com/embed/GmjD_sT96i0" frameborder="0" allowfullscreen></iframe>
+                    <h3 class="cursive text-christmas-red" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Hark! The Herald Angels Sing</h3>
+                    <p style="opacity: 0.8;">A majestic reimagining of this beloved herald of Christmas joy</p>
+                </div>
+                
+                <!-- Song 2 -->
+                <div class="song-card">
+                    <iframe class="youtube-embed" src="https://www.youtube.com/embed/v86YnAyjIms" frameborder="0" allowfullscreen></iframe>
+                    <h3 class="cursive text-christmas-red" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Jesu, Joy of Man's Desiring</h3>
+                    <p style="opacity: 0.8;">Bach's masterpiece given a tender, contemplative Christmas touch</p>
+                </div>
+                
+                <!-- Song 3 -->
+                <div class="song-card">
+                    <iframe class="youtube-embed" src="https://www.youtube.com/embed/eXvnvvr4jeU" frameborder="0" allowfullscreen></iframe>
+                    <h3 class="cursive text-christmas-red" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Silent Night</h3>
+                    <p style="opacity: 0.8;">The world's most beloved Christmas carol, reimagined with gentle wonder</p>
+                </div>
+                
+                <!-- Song 4 -->
+                <div class="song-card">
+                    <iframe class="youtube-embed" src="https://www.youtube.com/embed/NFy-MJsts3U" frameborder="0" allowfullscreen></iframe>
+                    <h3 class="cursive text-christmas-red" style="font-size: 1.5rem; margin-bottom: 0.5rem;">O Christmas Tree</h3>
+                    <p style="opacity: 0.8;">A classical celebration of the evergreen symbol of Christmas</p>
+                </div>
+                
+                <!-- Song 5 -->
+                <div class="song-card">
+                    <iframe class="youtube-embed" src="https://www.youtube.com/embed/UqJZqxhgrzM" frameborder="0" allowfullscreen></iframe>
+                    <h3 class="cursive text-christmas-red" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Deck the Halls</h3>
+                    <p style="opacity: 0.8;">Joyful arrangements that capture the festive spirit of the season</p>
+                </div>
+                
+                <!-- Song 6 -->
+                <div class="song-card">
+                    <iframe class="youtube-embed" src="https://www.youtube.com/embed/vpFrHEwMZ4U" frameborder="0" allowfullscreen></iframe>
+                    <h3 class="cursive text-christmas-red" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Jingle Bells</h3>
+                    <p style="opacity: 0.8;">A playful, sophisticated take on this timeless winter classic</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section bg-gradient-1">
+        <div class="container">
+            <div class="grid grid-2" style="align-items: center;">
+                <div>
+                    <h2 class="cursive text-christmas-green" style="font-size: 3rem; margin-bottom: 1rem;">About the Collection</h2>
+                    <div style="width: 100px; height: 4px; background-color: #F59E0B; margin-bottom: 2rem; border-radius: 2px;"></div>
+                    
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9;">
+                        <em>A Wintry Piano Wonderland</em> transforms beloved Christmas carols into sophisticated piano arrangements 
+                        that capture both the nostalgia and wonder of the holiday season.
+                    </p>
+                    
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9;">
+                        Each piece is carefully crafted to honor the original melodies while introducing fresh harmonic textures 
+                        and expressive nuances that make these timeless songs feel new again.
+                    </p>
+                    
+                    <p style="font-size: 1.1rem; opacity: 0.9;">
+                        Accompanied by charming illustrations, this collection creates a complete sensory experience 
+                        that brings families together around the piano during the most magical time of year.
+                    </p>
+                </div>
+                
+                <div>
+                    <h2 class="cursive text-christmas-red" style="font-size: 3rem; margin-bottom: 1rem;">About Oded Essner</h2>
+                    <div style="width: 100px; height: 4px; background-color: #F59E0B; margin-bottom: 2rem; border-radius: 2px;"></div>
+                    
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9;">
+                        Oded Essner is a passionate pianist and arranger whose love for classical music meets 
+                        the warmth of holiday traditions.
+                    </p>
+                    
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9;">
+                        With years of experience in creating accessible yet sophisticated piano arrangements, 
+                        Oded brings a unique perspective that honors musical heritage while making it 
+                        approachable for pianists of all levels.
+                    </p>
+                    
+                    <p style="font-size: 1.1rem; opacity: 0.9;">
+                        His arrangements have been celebrated for their ability to capture the emotional 
+                        essence of beloved melodies while providing pianists with rewarding musical challenges.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Purchase Section -->
+    <section id="purchase" class="section bg-gradient-3">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <h2 class="cursive text-christmas-green" style="font-size: 3rem; margin-bottom: 1rem;">Get Your Copy</h2>
+                <div style="width: 100px; height: 4px; background-color: #F59E0B; margin: 0 auto; border-radius: 2px;"></div>
+            </div>
+            
+            <div class="price-card">
+                <h3 class="elegant text-christmas-green" style="font-size: 2rem; margin-bottom: 1rem;">
+                    A Wintry Piano Wonderland
+                </h3>
+                
+                <div class="price cursive">$24.99</div>
+                
+                <ul style="text-align: left; margin: 2rem 0; line-height: 2;">
+                    <li>🎼 Complete sheet music for 6 beloved Christmas carols</li>
+                    <li>🎨 Beautiful illustrations accompanying each song</li>
+                    <li>📱 Digital download - instant access</li>
+                    <li>🎹 Suitable for intermediate to advanced pianists</li>
+                    <li>🎁 Perfect holiday gift for music lovers</li>
+                    <li>📞 Personal support from the composer</li>
+                </ul>
+                
+                <a href="#" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.2rem 2.5rem;">
+                    🎵 Buy Now & Download
+                </a>
+                
+                <p style="margin-top: 1rem; opacity: 0.7; font-size: 0.9rem;">
+                    Secure checkout • Instant download • 30-day satisfaction guarantee
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="section bg-christmas-green text-white text-center" style="padding: 2rem;">
+        <p class="cursive" style="font-size: 1.5rem; margin-bottom: 0.5rem;">A Wintry Piano Wonderland</p>
+        <p style="opacity: 0.8;">Christmas Carols Reimagined by Oded Essner</p>
+        <p style="opacity: 0.6; margin-top: 1rem;">© 2024 - Bringing families together through music</p>
+    </footer>
+</body>
+</html> 

@@ -1,11 +1,15 @@
-import Oe from "react";
-const s = {
+import $, { useState as Me, useRef as yt } from "react";
+const r = {
   // Primary colors - Brand colors for WSC Sports
   primary: {
     100: "#F1FF6C",
     // Light yellow
+    200: "#F4FF99",
+    // Hover state (extracted from Figma)
     300: "#E5FF00",
     // Base yellow (main brand color)
+    400: "#C2FF00",
+    // Active state (extracted from Figma)
     500: "#B9D300",
     // Yellow-green
     700: "#3F3F2B",
@@ -38,14 +42,16 @@ const s = {
   },
   // Alert colors - Error states
   alert: {
-    100: "#FF5368",
-    // Light red
-    300: "#FF364E",
-    // Medium red
-    500: "#AF001B",
-    // Dark red
-    700: "#500009"
+    100: "#FF6161",
+    // Light red (hover)
+    300: "#FF3131",
+    // Medium red (default)
+    500: "#B72C2C",
+    // Dark red (active)
+    700: "#500009",
     // Very dark red
+    900: "#8E1616"
+    // Disabled state
   },
   // Warning colors - Caution states
   warning: {
@@ -96,13 +102,13 @@ const s = {
     accent: "#E5FF00"
     // Accent borders
   }
-}, yr = (m) => {
-  const g = m.split(".");
-  let p = s;
-  for (const d of g)
-    if (p = p[d], p === void 0) return;
-  return p;
-}, W = {
+}, wt = (d) => {
+  const p = d.split(".");
+  let g = r;
+  for (const l of p)
+    if (g = g[l], g === void 0) return;
+  return g;
+}, Q = {
   none: "0px",
   xs: "4px",
   sm: "8px",
@@ -110,55 +116,141 @@ const s = {
   lg: "24px",
   xl: "32px",
   xxl: "40px"
-}, H = {
+}, be = {
   none: "0px",
   sm: "4px",
   md: "8px",
   full: "9999px"
   // "All the way radius" from Figma
-}, mr = {
+}, M = {
   // Font families from Figma
   fontFamily: {
     primary: ["Inter", "system-ui", "sans-serif"],
-    // Main font
+    // Main font family
     heading: ["Sora", "system-ui", "sans-serif"],
-    // Heading font
+    // For main page titles only
     mono: ["Monaco", "Consolas", "monospace"]
   },
-  // Font sizes from Figma
+  // Font sizes from Figma typography system
   fontSize: {
-    bodyS: "16px",
-    // Body M (16px) from Figma
-    bodyL: "20px",
-    // Body XL (20px) from Figma
+    // Headlines
+    h1: "40px",
+    // Headline 1 - 2.857rem
+    h2: "32px",
+    // Headline 2 - 2.286rem  
     h3: "24px",
-    // H3 (24px) from Figma
-    h1: "72px"
-    // Main heading from Figma
+    // Headline 3 - 1.714rem
+    // Body text
+    bodyXL: "20px",
+    // Body XL - 1.429rem
+    bodyL: "18px",
+    // Body L - 1.286rem
+    bodyM: "16px",
+    // Body M - 1.143rem (base)
+    bodyS: "14px",
+    // Body S - 1rem
+    bodyXS: "12px",
+    // Body XS - 0.857rem
+    // Labels
+    label: "11px",
+    // Label - 0.786rem
+    // Page title (uses Sora)
+    pageTitle: "72px"
+    // Main page title
   },
   // Font weights from Figma
   fontWeight: {
     regular: 400,
-    bold: 700,
-    // Used throughout Figma design
-    semibold: 600
-    // Used for main heading (Sora)
+    // Regular - body text, long-form content
+    semibold: 600,
+    // Semi-Bold - subheadings, form labels, emphasis
+    bold: 700
+    // Bold - headings, section titles, button labels
   },
-  // Line heights from Figma
+  // Line heights from Figma (all use 140%)
   lineHeight: {
     normal: 1.4,
-    // Main line height used in Figma
-    heading: 1.25
-    // 90px/72px = 1.25 for main heading
+    // 140% - used for all body text and headlines
+    heading: 1.25,
+    // 125% - used for page titles (Sora)
+    relaxed: 1.6
+    // 160% - used in some descriptions
   },
-  // Letter spacing from Figma
+  // Letter spacing
   letterSpacing: {
     normal: "0",
-    tight: "-0.4px"
-    // tracking-[-0.4px] from Figma
+    tight: "-0.4px",
+    // Used in body text
+    wide: "0.025em"
+  },
+  // Typography scale with complete definitions
+  scale: {
+    h1: {
+      fontSize: "40px",
+      fontWeight: 700,
+      lineHeight: 1.4,
+      fontFamily: "Inter, system-ui, sans-serif",
+      usage: "Used for large, attention-grabbing headlines in promotional areas or in rules system."
+    },
+    h2: {
+      fontSize: "32px",
+      fontWeight: 700,
+      lineHeight: 1.4,
+      fontFamily: "Inter, system-ui, sans-serif",
+      usage: "Used for page titles, section headers, and prominent UI headings."
+    },
+    h3: {
+      fontSize: "24px",
+      fontWeight: 700,
+      lineHeight: 1.4,
+      fontFamily: "Inter, system-ui, sans-serif",
+      usage: "Useful for page intros, grouped sections, or modal headlines."
+    },
+    bodyXL: {
+      fontSize: "20px",
+      fontWeight: 400,
+      lineHeight: 1.4,
+      fontFamily: "Inter, system-ui, sans-serif",
+      usage: "Used for subheadings, section intros, or supporting titles."
+    },
+    bodyL: {
+      fontSize: "18px",
+      fontWeight: 400,
+      lineHeight: 1.4,
+      fontFamily: "Inter, system-ui, sans-serif",
+      usage: "Used to emphasize body text or create light hierarchy above 16px. Ideal for callouts or key details."
+    },
+    bodyM: {
+      fontSize: "16px",
+      fontWeight: 400,
+      lineHeight: 1.4,
+      fontFamily: "Inter, system-ui, sans-serif",
+      usage: "Used for long-form content such as paragraphs and main descriptions, and main tabs labels"
+    },
+    bodyS: {
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: 1.4,
+      fontFamily: "Inter, system-ui, sans-serif",
+      usage: "Used for primary content like input text, labels, links, and secondary tabs labels"
+    },
+    bodyXS: {
+      fontSize: "12px",
+      fontWeight: 400,
+      lineHeight: 1.4,
+      fontFamily: "Inter, system-ui, sans-serif",
+      usage: "Used for secondary information such as captions, helper text, timeline labels, or tooltips."
+    },
+    label: {
+      fontSize: "11px",
+      fontWeight: 400,
+      lineHeight: 1.4,
+      fontFamily: "Inter, system-ui, sans-serif",
+      usage: "Used for tab labels and chart metadata"
+    }
   }
-};
-var re = { exports: {} }, z = {};
+}, Ct = (d) => M.scale[d];
+var Re = { exports: {} }, le = {};
 /**
  * @license React
  * react-jsx-runtime.production.min.js
@@ -168,21 +260,21 @@ var re = { exports: {} }, z = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var we;
-function vr() {
-  if (we) return z;
-  we = 1;
-  var m = Oe, g = Symbol.for("react.element"), p = Symbol.for("react.fragment"), d = Object.prototype.hasOwnProperty, v = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, R = { key: !0, ref: !0, __self: !0, __source: !0 };
-  function D(_, x, O) {
-    var F, j = {}, C = null, L = null;
-    O !== void 0 && (C = "" + O), x.key !== void 0 && (C = "" + x.key), x.ref !== void 0 && (L = x.ref);
-    for (F in x) d.call(x, F) && !R.hasOwnProperty(F) && (j[F] = x[F]);
-    if (_ && _.defaultProps) for (F in x = _.defaultProps, x) j[F] === void 0 && (j[F] = x[F]);
-    return { $$typeof: g, type: _, key: C, ref: L, props: j, _owner: v.current };
+var Ye;
+function mt() {
+  if (Ye) return le;
+  Ye = 1;
+  var d = $, p = Symbol.for("react.element"), g = Symbol.for("react.fragment"), l = Object.prototype.hasOwnProperty, x = d.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, F = { key: !0, ref: !0, __self: !0, __source: !0 };
+  function C(W, v, B) {
+    var j, _ = {}, E = null, O = null;
+    B !== void 0 && (E = "" + B), v.key !== void 0 && (E = "" + v.key), v.ref !== void 0 && (O = v.ref);
+    for (j in v) l.call(v, j) && !F.hasOwnProperty(j) && (_[j] = v[j]);
+    if (W && W.defaultProps) for (j in v = W.defaultProps, v) _[j] === void 0 && (_[j] = v[j]);
+    return { $$typeof: p, type: W, key: E, ref: O, props: _, _owner: x.current };
   }
-  return z.Fragment = p, z.jsx = D, z.jsxs = D, z;
+  return le.Fragment = g, le.jsx = C, le.jsxs = C, le;
 }
-var $ = {};
+var ce = {};
 /**
  * @license React
  * react-jsx-runtime.development.js
@@ -192,91 +284,91 @@ var $ = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var Te;
-function gr() {
-  return Te || (Te = 1, process.env.NODE_ENV !== "production" && function() {
-    var m = Oe, g = Symbol.for("react.element"), p = Symbol.for("react.portal"), d = Symbol.for("react.fragment"), v = Symbol.for("react.strict_mode"), R = Symbol.for("react.profiler"), D = Symbol.for("react.provider"), _ = Symbol.for("react.context"), x = Symbol.for("react.forward_ref"), O = Symbol.for("react.suspense"), F = Symbol.for("react.suspense_list"), j = Symbol.for("react.memo"), C = Symbol.for("react.lazy"), L = Symbol.for("react.offscreen"), te = Symbol.iterator, ke = "@@iterator";
-    function Pe(e) {
+var Ve;
+function bt() {
+  return Ve || (Ve = 1, process.env.NODE_ENV !== "production" && function() {
+    var d = $, p = Symbol.for("react.element"), g = Symbol.for("react.portal"), l = Symbol.for("react.fragment"), x = Symbol.for("react.strict_mode"), F = Symbol.for("react.profiler"), C = Symbol.for("react.provider"), W = Symbol.for("react.context"), v = Symbol.for("react.forward_ref"), B = Symbol.for("react.suspense"), j = Symbol.for("react.suspense_list"), _ = Symbol.for("react.memo"), E = Symbol.for("react.lazy"), O = Symbol.for("react.offscreen"), P = Symbol.iterator, V = "@@iterator";
+    function U(e) {
       if (e === null || typeof e != "object")
         return null;
-      var r = te && e[te] || e[ke];
-      return typeof r == "function" ? r : null;
+      var n = P && e[P] || e[V];
+      return typeof n == "function" ? n : null;
     }
-    var k = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-    function h(e) {
+    var S = d.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    function m(e) {
       {
-        for (var r = arguments.length, t = new Array(r > 1 ? r - 1 : 0), a = 1; a < r; a++)
-          t[a - 1] = arguments[a];
-        Ae("error", e, t);
+        for (var n = arguments.length, o = new Array(n > 1 ? n - 1 : 0), i = 1; i < n; i++)
+          o[i - 1] = arguments[i];
+        D("error", e, o);
       }
     }
-    function Ae(e, r, t) {
+    function D(e, n, o) {
       {
-        var a = k.ReactDebugCurrentFrame, l = a.getStackAddendum();
-        l !== "" && (r += "%s", t = t.concat([l]));
-        var c = t.map(function(i) {
-          return String(i);
+        var i = S.ReactDebugCurrentFrame, f = i.getStackAddendum();
+        f !== "" && (n += "%s", o = o.concat([f]));
+        var h = o.map(function(u) {
+          return String(u);
         });
-        c.unshift("Warning: " + r), Function.prototype.apply.call(console[e], console, c);
+        h.unshift("Warning: " + n), Function.prototype.apply.call(console[e], console, h);
       }
     }
-    var We = !1, De = !1, Be = !1, Ie = !1, ze = !1, ne;
-    ne = Symbol.for("react.module.reference");
-    function $e(e) {
-      return !!(typeof e == "string" || typeof e == "function" || e === d || e === R || ze || e === v || e === O || e === F || Ie || e === L || We || De || Be || typeof e == "object" && e !== null && (e.$$typeof === C || e.$$typeof === j || e.$$typeof === D || e.$$typeof === _ || e.$$typeof === x || // This needs to include all possible module reference object
+    var ee = !1, te = !1, N = !1, re = !1, L = !1, X;
+    X = Symbol.for("react.module.reference");
+    function ne(e) {
+      return !!(typeof e == "string" || typeof e == "function" || e === l || e === F || L || e === x || e === B || e === j || re || e === O || ee || te || N || typeof e == "object" && e !== null && (e.$$typeof === E || e.$$typeof === _ || e.$$typeof === C || e.$$typeof === W || e.$$typeof === v || // This needs to include all possible module reference object
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
-      e.$$typeof === ne || e.getModuleId !== void 0));
+      e.$$typeof === X || e.getModuleId !== void 0));
     }
-    function Ye(e, r, t) {
-      var a = e.displayName;
-      if (a)
-        return a;
-      var l = r.displayName || r.name || "";
-      return l !== "" ? t + "(" + l + ")" : t;
+    function oe(e, n, o) {
+      var i = e.displayName;
+      if (i)
+        return i;
+      var f = n.displayName || n.name || "";
+      return f !== "" ? o + "(" + f + ")" : o;
     }
-    function ae(e) {
+    function K(e) {
       return e.displayName || "Context";
     }
-    function S(e) {
+    function I(e) {
       if (e == null)
         return null;
-      if (typeof e.tag == "number" && h("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof e == "function")
+      if (typeof e.tag == "number" && m("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof e == "function")
         return e.displayName || e.name || null;
       if (typeof e == "string")
         return e;
       switch (e) {
-        case d:
+        case l:
           return "Fragment";
-        case p:
+        case g:
           return "Portal";
-        case R:
-          return "Profiler";
-        case v:
-          return "StrictMode";
-        case O:
-          return "Suspense";
         case F:
+          return "Profiler";
+        case x:
+          return "StrictMode";
+        case B:
+          return "Suspense";
+        case j:
           return "SuspenseList";
       }
       if (typeof e == "object")
         switch (e.$$typeof) {
+          case W:
+            var n = e;
+            return K(n) + ".Consumer";
+          case C:
+            var o = e;
+            return K(o._context) + ".Provider";
+          case v:
+            return oe(e, e.render, "ForwardRef");
           case _:
-            var r = e;
-            return ae(r) + ".Consumer";
-          case D:
-            var t = e;
-            return ae(t._context) + ".Provider";
-          case x:
-            return Ye(e, e.render, "ForwardRef");
-          case j:
-            var a = e.displayName || null;
-            return a !== null ? a : S(e.type) || "Memo";
-          case C: {
-            var l = e, c = l._payload, i = l._init;
+            var i = e.displayName || null;
+            return i !== null ? i : I(e.type) || "Memo";
+          case E: {
+            var f = e, h = f._payload, u = f._init;
             try {
-              return S(i(c));
+              return I(u(h));
             } catch {
               return null;
             }
@@ -284,18 +376,18 @@ function gr() {
         }
       return null;
     }
-    var w = Object.assign, B = 0, oe, ie, le, se, ce, ue, fe;
-    function de() {
+    var R = Object.assign, z = 0, J, q, s, a, A, de, fe;
+    function pe() {
     }
-    de.__reactDisabledLog = !0;
-    function Le() {
+    pe.__reactDisabledLog = !0;
+    function he() {
       {
-        if (B === 0) {
-          oe = console.log, ie = console.info, le = console.warn, se = console.error, ce = console.group, ue = console.groupCollapsed, fe = console.groupEnd;
+        if (z === 0) {
+          J = console.log, q = console.info, s = console.warn, a = console.error, A = console.group, de = console.groupCollapsed, fe = console.groupEnd;
           var e = {
             configurable: !0,
             enumerable: !0,
-            value: de,
+            value: pe,
             writable: !0
           };
           Object.defineProperties(console, {
@@ -308,332 +400,332 @@ function gr() {
             groupEnd: e
           });
         }
-        B++;
+        z++;
       }
     }
-    function Ve() {
+    function ie() {
       {
-        if (B--, B === 0) {
+        if (z--, z === 0) {
           var e = {
             configurable: !0,
             enumerable: !0,
             writable: !0
           };
           Object.defineProperties(console, {
-            log: w({}, e, {
-              value: oe
+            log: R({}, e, {
+              value: J
             }),
-            info: w({}, e, {
-              value: ie
+            info: R({}, e, {
+              value: q
             }),
-            warn: w({}, e, {
-              value: le
+            warn: R({}, e, {
+              value: s
             }),
-            error: w({}, e, {
-              value: se
+            error: R({}, e, {
+              value: a
             }),
-            group: w({}, e, {
-              value: ce
+            group: R({}, e, {
+              value: A
             }),
-            groupCollapsed: w({}, e, {
-              value: ue
+            groupCollapsed: R({}, e, {
+              value: de
             }),
-            groupEnd: w({}, e, {
+            groupEnd: R({}, e, {
               value: fe
             })
           });
         }
-        B < 0 && h("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
+        z < 0 && m("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
       }
     }
-    var J = k.ReactCurrentDispatcher, q;
-    function V(e, r, t) {
+    var ae = S.ReactCurrentDispatcher, ve;
+    function xe(e, n, o) {
       {
-        if (q === void 0)
+        if (ve === void 0)
           try {
             throw Error();
-          } catch (l) {
-            var a = l.stack.trim().match(/\n( *(at )?)/);
-            q = a && a[1] || "";
+          } catch (f) {
+            var i = f.stack.trim().match(/\n( *(at )?)/);
+            ve = i && i[1] || "";
           }
         return `
-` + q + e;
+` + ve + e;
       }
     }
-    var G = !1, M;
+    var je = !1, ge;
     {
-      var Me = typeof WeakMap == "function" ? WeakMap : Map;
-      M = new Me();
+      var Ne = typeof WeakMap == "function" ? WeakMap : Map;
+      ge = new Ne();
     }
-    function pe(e, r) {
-      if (!e || G)
+    function ke(e, n) {
+      if (!e || je)
         return "";
       {
-        var t = M.get(e);
-        if (t !== void 0)
-          return t;
+        var o = ge.get(e);
+        if (o !== void 0)
+          return o;
       }
-      var a;
-      G = !0;
-      var l = Error.prepareStackTrace;
+      var i;
+      je = !0;
+      var f = Error.prepareStackTrace;
       Error.prepareStackTrace = void 0;
-      var c;
-      c = J.current, J.current = null, Le();
+      var h;
+      h = ae.current, ae.current = null, he();
       try {
-        if (r) {
-          var i = function() {
+        if (n) {
+          var u = function() {
             throw Error();
           };
-          if (Object.defineProperty(i.prototype, "props", {
+          if (Object.defineProperty(u.prototype, "props", {
             set: function() {
               throw Error();
             }
           }), typeof Reflect == "object" && Reflect.construct) {
             try {
-              Reflect.construct(i, []);
-            } catch (b) {
-              a = b;
+              Reflect.construct(u, []);
+            } catch (k) {
+              i = k;
             }
-            Reflect.construct(e, [], i);
+            Reflect.construct(e, [], u);
           } else {
             try {
-              i.call();
-            } catch (b) {
-              a = b;
+              u.call();
+            } catch (k) {
+              i = k;
             }
-            e.call(i.prototype);
+            e.call(u.prototype);
           }
         } else {
           try {
             throw Error();
-          } catch (b) {
-            a = b;
+          } catch (k) {
+            i = k;
           }
           e();
         }
-      } catch (b) {
-        if (b && a && typeof b.stack == "string") {
-          for (var o = b.stack.split(`
-`), y = a.stack.split(`
-`), u = o.length - 1, f = y.length - 1; u >= 1 && f >= 0 && o[u] !== y[f]; )
-            f--;
-          for (; u >= 1 && f >= 0; u--, f--)
-            if (o[u] !== y[f]) {
-              if (u !== 1 || f !== 1)
+      } catch (k) {
+        if (k && i && typeof k.stack == "string") {
+          for (var c = k.stack.split(`
+`), w = i.stack.split(`
+`), y = c.length - 1, b = w.length - 1; y >= 1 && b >= 0 && c[y] !== w[b]; )
+            b--;
+          for (; y >= 1 && b >= 0; y--, b--)
+            if (c[y] !== w[b]) {
+              if (y !== 1 || b !== 1)
                 do
-                  if (u--, f--, f < 0 || o[u] !== y[f]) {
-                    var E = `
-` + o[u].replace(" at new ", " at ");
-                    return e.displayName && E.includes("<anonymous>") && (E = E.replace("<anonymous>", e.displayName)), typeof e == "function" && M.set(e, E), E;
+                  if (y--, b--, b < 0 || c[y] !== w[b]) {
+                    var T = `
+` + c[y].replace(" at new ", " at ");
+                    return e.displayName && T.includes("<anonymous>") && (T = T.replace("<anonymous>", e.displayName)), typeof e == "function" && ge.set(e, T), T;
                   }
-                while (u >= 1 && f >= 0);
+                while (y >= 1 && b >= 0);
               break;
             }
         }
       } finally {
-        G = !1, J.current = c, Ve(), Error.prepareStackTrace = l;
+        je = !1, ae.current = h, ie(), Error.prepareStackTrace = f;
       }
-      var A = e ? e.displayName || e.name : "", T = A ? V(A) : "";
-      return typeof e == "function" && M.set(e, T), T;
+      var Z = e ? e.displayName || e.name : "", Y = Z ? xe(Z) : "";
+      return typeof e == "function" && ge.set(e, Y), Y;
     }
-    function Ue(e, r, t) {
-      return pe(e, !1);
+    function Xe(e, n, o) {
+      return ke(e, !1);
     }
-    function Ne(e) {
-      var r = e.prototype;
-      return !!(r && r.isReactComponent);
+    function Ke(e) {
+      var n = e.prototype;
+      return !!(n && n.isReactComponent);
     }
-    function U(e, r, t) {
+    function ye(e, n, o) {
       if (e == null)
         return "";
       if (typeof e == "function")
-        return pe(e, Ne(e));
+        return ke(e, Ke(e));
       if (typeof e == "string")
-        return V(e);
+        return xe(e);
       switch (e) {
-        case O:
-          return V("Suspense");
-        case F:
-          return V("SuspenseList");
+        case B:
+          return xe("Suspense");
+        case j:
+          return xe("SuspenseList");
       }
       if (typeof e == "object")
         switch (e.$$typeof) {
-          case x:
-            return Ue(e.render);
-          case j:
-            return U(e.type, r, t);
-          case C: {
-            var a = e, l = a._payload, c = a._init;
+          case v:
+            return Xe(e.render);
+          case _:
+            return ye(e.type, n, o);
+          case E: {
+            var i = e, f = i._payload, h = i._init;
             try {
-              return U(c(l), r, t);
+              return ye(h(f), n, o);
             } catch {
             }
           }
         }
       return "";
     }
-    var I = Object.prototype.hasOwnProperty, ve = {}, ge = k.ReactDebugCurrentFrame;
-    function N(e) {
+    var se = Object.prototype.hasOwnProperty, _e = {}, Ie = S.ReactDebugCurrentFrame;
+    function me(e) {
       if (e) {
-        var r = e._owner, t = U(e.type, e._source, r ? r.type : null);
-        ge.setExtraStackFrame(t);
+        var n = e._owner, o = ye(e.type, e._source, n ? n.type : null);
+        Ie.setExtraStackFrame(o);
       } else
-        ge.setExtraStackFrame(null);
+        Ie.setExtraStackFrame(null);
     }
-    function He(e, r, t, a, l) {
+    function Je(e, n, o, i, f) {
       {
-        var c = Function.call.bind(I);
-        for (var i in e)
-          if (c(e, i)) {
-            var o = void 0;
+        var h = Function.call.bind(se);
+        for (var u in e)
+          if (h(e, u)) {
+            var c = void 0;
             try {
-              if (typeof e[i] != "function") {
-                var y = Error((a || "React class") + ": " + t + " type `" + i + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[i] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
-                throw y.name = "Invariant Violation", y;
+              if (typeof e[u] != "function") {
+                var w = Error((i || "React class") + ": " + o + " type `" + u + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[u] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                throw w.name = "Invariant Violation", w;
               }
-              o = e[i](r, i, a, t, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
-            } catch (u) {
-              o = u;
+              c = e[u](n, u, i, o, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+            } catch (y) {
+              c = y;
             }
-            o && !(o instanceof Error) && (N(l), h("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", a || "React class", t, i, typeof o), N(null)), o instanceof Error && !(o.message in ve) && (ve[o.message] = !0, N(l), h("Failed %s type: %s", t, o.message), N(null));
+            c && !(c instanceof Error) && (me(f), m("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", i || "React class", o, u, typeof c), me(null)), c instanceof Error && !(c.message in _e) && (_e[c.message] = !0, me(f), m("Failed %s type: %s", o, c.message), me(null));
           }
       }
     }
-    var Je = Array.isArray;
-    function K(e) {
-      return Je(e);
-    }
-    function qe(e) {
-      {
-        var r = typeof Symbol == "function" && Symbol.toStringTag, t = r && e[Symbol.toStringTag] || e.constructor.name || "Object";
-        return t;
-      }
+    var qe = Array.isArray;
+    function Fe(e) {
+      return qe(e);
     }
     function Ge(e) {
+      {
+        var n = typeof Symbol == "function" && Symbol.toStringTag, o = n && e[Symbol.toStringTag] || e.constructor.name || "Object";
+        return o;
+      }
+    }
+    function Ze(e) {
       try {
-        return xe(e), !1;
+        return ze(e), !1;
       } catch {
         return !0;
       }
     }
-    function xe(e) {
+    function ze(e) {
       return "" + e;
     }
-    function he(e) {
-      if (Ge(e))
-        return h("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", qe(e)), xe(e);
+    function Te(e) {
+      if (Ze(e))
+        return m("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", Ge(e)), ze(e);
     }
-    var ye = k.ReactCurrentOwner, Ke = {
+    var We = S.ReactCurrentOwner, Qe = {
       key: !0,
       ref: !0,
       __self: !0,
       __source: !0
-    }, me, be;
-    function Xe(e) {
-      if (I.call(e, "ref")) {
-        var r = Object.getOwnPropertyDescriptor(e, "ref").get;
-        if (r && r.isReactWarning)
+    }, Be, Oe;
+    function et(e) {
+      if (se.call(e, "ref")) {
+        var n = Object.getOwnPropertyDescriptor(e, "ref").get;
+        if (n && n.isReactWarning)
           return !1;
       }
       return e.ref !== void 0;
     }
-    function Ze(e) {
-      if (I.call(e, "key")) {
-        var r = Object.getOwnPropertyDescriptor(e, "key").get;
-        if (r && r.isReactWarning)
+    function tt(e) {
+      if (se.call(e, "key")) {
+        var n = Object.getOwnPropertyDescriptor(e, "key").get;
+        if (n && n.isReactWarning)
           return !1;
       }
       return e.key !== void 0;
     }
-    function Qe(e, r) {
-      typeof e.ref == "string" && ye.current;
+    function rt(e, n) {
+      typeof e.ref == "string" && We.current;
     }
-    function er(e, r) {
+    function nt(e, n) {
       {
-        var t = function() {
-          me || (me = !0, h("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
+        var o = function() {
+          Be || (Be = !0, m("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", n));
         };
-        t.isReactWarning = !0, Object.defineProperty(e, "key", {
-          get: t,
+        o.isReactWarning = !0, Object.defineProperty(e, "key", {
+          get: o,
           configurable: !0
         });
       }
     }
-    function rr(e, r) {
+    function ot(e, n) {
       {
-        var t = function() {
-          be || (be = !0, h("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
+        var o = function() {
+          Oe || (Oe = !0, m("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", n));
         };
-        t.isReactWarning = !0, Object.defineProperty(e, "ref", {
-          get: t,
+        o.isReactWarning = !0, Object.defineProperty(e, "ref", {
+          get: o,
           configurable: !0
         });
       }
     }
-    var tr = function(e, r, t, a, l, c, i) {
-      var o = {
+    var it = function(e, n, o, i, f, h, u) {
+      var c = {
         // This tag allows us to uniquely identify this as a React Element
-        $$typeof: g,
+        $$typeof: p,
         // Built-in properties that belong on the element
         type: e,
-        key: r,
-        ref: t,
-        props: i,
+        key: n,
+        ref: o,
+        props: u,
         // Record the component responsible for creating this element.
-        _owner: c
+        _owner: h
       };
-      return o._store = {}, Object.defineProperty(o._store, "validated", {
+      return c._store = {}, Object.defineProperty(c._store, "validated", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
         value: !1
-      }), Object.defineProperty(o, "_self", {
+      }), Object.defineProperty(c, "_self", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
-        value: a
-      }), Object.defineProperty(o, "_source", {
+        value: i
+      }), Object.defineProperty(c, "_source", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
-        value: l
-      }), Object.freeze && (Object.freeze(o.props), Object.freeze(o)), o;
+        value: f
+      }), Object.freeze && (Object.freeze(c.props), Object.freeze(c)), c;
     };
-    function nr(e, r, t, a, l) {
+    function at(e, n, o, i, f) {
       {
-        var c, i = {}, o = null, y = null;
-        t !== void 0 && (he(t), o = "" + t), Ze(r) && (he(r.key), o = "" + r.key), Xe(r) && (y = r.ref, Qe(r, l));
-        for (c in r)
-          I.call(r, c) && !Ke.hasOwnProperty(c) && (i[c] = r[c]);
+        var h, u = {}, c = null, w = null;
+        o !== void 0 && (Te(o), c = "" + o), tt(n) && (Te(n.key), c = "" + n.key), et(n) && (w = n.ref, rt(n, f));
+        for (h in n)
+          se.call(n, h) && !Qe.hasOwnProperty(h) && (u[h] = n[h]);
         if (e && e.defaultProps) {
-          var u = e.defaultProps;
-          for (c in u)
-            i[c] === void 0 && (i[c] = u[c]);
+          var y = e.defaultProps;
+          for (h in y)
+            u[h] === void 0 && (u[h] = y[h]);
         }
-        if (o || y) {
-          var f = typeof e == "function" ? e.displayName || e.name || "Unknown" : e;
-          o && er(i, f), y && rr(i, f);
+        if (c || w) {
+          var b = typeof e == "function" ? e.displayName || e.name || "Unknown" : e;
+          c && nt(u, b), w && ot(u, b);
         }
-        return tr(e, o, y, l, a, ye.current, i);
+        return it(e, c, w, f, i, We.current, u);
       }
     }
-    var X = k.ReactCurrentOwner, Fe = k.ReactDebugCurrentFrame;
-    function P(e) {
+    var Se = S.ReactCurrentOwner, Pe = S.ReactDebugCurrentFrame;
+    function G(e) {
       if (e) {
-        var r = e._owner, t = U(e.type, e._source, r ? r.type : null);
-        Fe.setExtraStackFrame(t);
+        var n = e._owner, o = ye(e.type, e._source, n ? n.type : null);
+        Pe.setExtraStackFrame(o);
       } else
-        Fe.setExtraStackFrame(null);
+        Pe.setExtraStackFrame(null);
     }
-    var Z;
-    Z = !1;
-    function Q(e) {
-      return typeof e == "object" && e !== null && e.$$typeof === g;
+    var we;
+    we = !1;
+    function Ce(e) {
+      return typeof e == "object" && e !== null && e.$$typeof === p;
     }
-    function Ee() {
+    function De() {
       {
-        if (X.current) {
-          var e = S(X.current.type);
+        if (Se.current) {
+          var e = I(Se.current.type);
           if (e)
             return `
 
@@ -642,200 +734,200 @@ Check the render method of \`` + e + "`.";
         return "";
       }
     }
-    function ar(e) {
+    function st(e) {
       return "";
     }
-    var je = {};
-    function or(e) {
+    var Ae = {};
+    function lt(e) {
       {
-        var r = Ee();
-        if (!r) {
-          var t = typeof e == "string" ? e : e.displayName || e.name;
-          t && (r = `
+        var n = De();
+        if (!n) {
+          var o = typeof e == "string" ? e : e.displayName || e.name;
+          o && (n = `
 
-Check the top-level render call using <` + t + ">.");
+Check the top-level render call using <` + o + ">.");
         }
-        return r;
+        return n;
       }
     }
-    function Re(e, r) {
+    function He(e, n) {
       {
         if (!e._store || e._store.validated || e.key != null)
           return;
         e._store.validated = !0;
-        var t = or(r);
-        if (je[t])
+        var o = lt(n);
+        if (Ae[o])
           return;
-        je[t] = !0;
-        var a = "";
-        e && e._owner && e._owner !== X.current && (a = " It was passed a child from " + S(e._owner.type) + "."), P(e), h('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', t, a), P(null);
+        Ae[o] = !0;
+        var i = "";
+        e && e._owner && e._owner !== Se.current && (i = " It was passed a child from " + I(e._owner.type) + "."), G(e), m('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', o, i), G(null);
       }
     }
-    function Se(e, r) {
+    function $e(e, n) {
       {
         if (typeof e != "object")
           return;
-        if (K(e))
-          for (var t = 0; t < e.length; t++) {
-            var a = e[t];
-            Q(a) && Re(a, r);
+        if (Fe(e))
+          for (var o = 0; o < e.length; o++) {
+            var i = e[o];
+            Ce(i) && He(i, n);
           }
-        else if (Q(e))
+        else if (Ce(e))
           e._store && (e._store.validated = !0);
         else if (e) {
-          var l = Pe(e);
-          if (typeof l == "function" && l !== e.entries)
-            for (var c = l.call(e), i; !(i = c.next()).done; )
-              Q(i.value) && Re(i.value, r);
+          var f = U(e);
+          if (typeof f == "function" && f !== e.entries)
+            for (var h = f.call(e), u; !(u = h.next()).done; )
+              Ce(u.value) && He(u.value, n);
         }
       }
     }
-    function ir(e) {
+    function ct(e) {
       {
-        var r = e.type;
-        if (r == null || typeof r == "string")
+        var n = e.type;
+        if (n == null || typeof n == "string")
           return;
-        var t;
-        if (typeof r == "function")
-          t = r.propTypes;
-        else if (typeof r == "object" && (r.$$typeof === x || // Note: Memo only checks outer props here.
+        var o;
+        if (typeof n == "function")
+          o = n.propTypes;
+        else if (typeof n == "object" && (n.$$typeof === v || // Note: Memo only checks outer props here.
         // Inner props are checked in the reconciler.
-        r.$$typeof === j))
-          t = r.propTypes;
+        n.$$typeof === _))
+          o = n.propTypes;
         else
           return;
-        if (t) {
-          var a = S(r);
-          He(t, e.props, "prop", a, e);
-        } else if (r.PropTypes !== void 0 && !Z) {
-          Z = !0;
-          var l = S(r);
-          h("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", l || "Unknown");
+        if (o) {
+          var i = I(n);
+          Je(o, e.props, "prop", i, e);
+        } else if (n.PropTypes !== void 0 && !we) {
+          we = !0;
+          var f = I(n);
+          m("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", f || "Unknown");
         }
-        typeof r.getDefaultProps == "function" && !r.getDefaultProps.isReactClassApproved && h("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
+        typeof n.getDefaultProps == "function" && !n.getDefaultProps.isReactClassApproved && m("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
       }
     }
-    function lr(e) {
+    function ut(e) {
       {
-        for (var r = Object.keys(e.props), t = 0; t < r.length; t++) {
-          var a = r[t];
-          if (a !== "children" && a !== "key") {
-            P(e), h("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", a), P(null);
+        for (var n = Object.keys(e.props), o = 0; o < n.length; o++) {
+          var i = n[o];
+          if (i !== "children" && i !== "key") {
+            G(e), m("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", i), G(null);
             break;
           }
         }
-        e.ref !== null && (P(e), h("Invalid attribute `ref` supplied to `React.Fragment`."), P(null));
+        e.ref !== null && (G(e), m("Invalid attribute `ref` supplied to `React.Fragment`."), G(null));
       }
     }
-    var _e = {};
-    function Ce(e, r, t, a, l, c) {
+    var Ue = {};
+    function Le(e, n, o, i, f, h) {
       {
-        var i = $e(e);
-        if (!i) {
-          var o = "";
-          (e === void 0 || typeof e == "object" && e !== null && Object.keys(e).length === 0) && (o += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
-          var y = ar();
-          y ? o += y : o += Ee();
-          var u;
-          e === null ? u = "null" : K(e) ? u = "array" : e !== void 0 && e.$$typeof === g ? (u = "<" + (S(e.type) || "Unknown") + " />", o = " Did you accidentally export a JSX literal instead of a component?") : u = typeof e, h("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", u, o);
+        var u = ne(e);
+        if (!u) {
+          var c = "";
+          (e === void 0 || typeof e == "object" && e !== null && Object.keys(e).length === 0) && (c += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
+          var w = st();
+          w ? c += w : c += De();
+          var y;
+          e === null ? y = "null" : Fe(e) ? y = "array" : e !== void 0 && e.$$typeof === p ? (y = "<" + (I(e.type) || "Unknown") + " />", c = " Did you accidentally export a JSX literal instead of a component?") : y = typeof e, m("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", y, c);
         }
-        var f = nr(e, r, t, l, c);
-        if (f == null)
-          return f;
-        if (i) {
-          var E = r.children;
-          if (E !== void 0)
-            if (a)
-              if (K(E)) {
-                for (var A = 0; A < E.length; A++)
-                  Se(E[A], e);
-                Object.freeze && Object.freeze(E);
+        var b = at(e, n, o, f, h);
+        if (b == null)
+          return b;
+        if (u) {
+          var T = n.children;
+          if (T !== void 0)
+            if (i)
+              if (Fe(T)) {
+                for (var Z = 0; Z < T.length; Z++)
+                  $e(T[Z], e);
+                Object.freeze && Object.freeze(T);
               } else
-                h("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+                m("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
             else
-              Se(E, e);
+              $e(T, e);
         }
-        if (I.call(r, "key")) {
-          var T = S(e), b = Object.keys(r).filter(function(pr) {
-            return pr !== "key";
-          }), ee = b.length > 0 ? "{key: someKey, " + b.join(": ..., ") + ": ...}" : "{key: someKey}";
-          if (!_e[T + ee]) {
-            var dr = b.length > 0 ? "{" + b.join(": ..., ") + ": ...}" : "{}";
-            h(`A props object containing a "key" prop is being spread into JSX:
+        if (se.call(n, "key")) {
+          var Y = I(e), k = Object.keys(n).filter(function(gt) {
+            return gt !== "key";
+          }), Ee = k.length > 0 ? "{key: someKey, " + k.join(": ..., ") + ": ...}" : "{key: someKey}";
+          if (!Ue[Y + Ee]) {
+            var xt = k.length > 0 ? "{" + k.join(": ..., ") + ": ...}" : "{}";
+            m(`A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
 React keys must be passed directly to JSX without using spread:
   let props = %s;
-  <%s key={someKey} {...props} />`, ee, T, dr, T), _e[T + ee] = !0;
+  <%s key={someKey} {...props} />`, Ee, Y, xt, Y), Ue[Y + Ee] = !0;
           }
         }
-        return e === d ? lr(f) : ir(f), f;
+        return e === l ? ut(b) : ct(b), b;
       }
     }
-    function sr(e, r, t) {
-      return Ce(e, r, t, !0);
+    function dt(e, n, o) {
+      return Le(e, n, o, !0);
     }
-    function cr(e, r, t) {
-      return Ce(e, r, t, !1);
+    function ft(e, n, o) {
+      return Le(e, n, o, !1);
     }
-    var ur = cr, fr = sr;
-    $.Fragment = d, $.jsx = ur, $.jsxs = fr;
-  }()), $;
+    var pt = ft, ht = dt;
+    ce.Fragment = l, ce.jsx = pt, ce.jsxs = ht;
+  }()), ce;
 }
-process.env.NODE_ENV === "production" ? re.exports = vr() : re.exports = gr();
-var n = re.exports;
-const br = ({
-  showSpacing: m = !0,
-  showRadius: g = !0
+process.env.NODE_ENV === "production" ? Re.exports = mt() : Re.exports = bt();
+var t = Re.exports;
+const Et = ({
+  showSpacing: d = !0,
+  showRadius: p = !0
 }) => {
-  const p = [
-    { label: "4px", value: W.xs },
-    { label: "8px", value: W.sm },
-    { label: "16px", value: W.md },
-    { label: "24px", value: W.lg },
-    { label: "32px", value: W.xl },
-    { label: "40px", value: W.xxl }
-  ], d = [
-    { label: "0 px", value: H.none, style: { borderRadius: "0px" } },
-    { label: "4 px", value: H.sm, style: { borderRadius: "4px" } },
-    { label: "8 px", value: H.md, style: { borderRadius: "8px" } },
-    { label: "All the way radius", value: H.full, style: { borderRadius: "32px" } }
+  const g = [
+    { label: "4px", value: Q.xs },
+    { label: "8px", value: Q.sm },
+    { label: "16px", value: Q.md },
+    { label: "24px", value: Q.lg },
+    { label: "32px", value: Q.xl },
+    { label: "40px", value: Q.xxl }
+  ], l = [
+    { label: "0 px", value: be.none, style: { borderRadius: "0px" } },
+    { label: "4 px", value: be.sm, style: { borderRadius: "4px" } },
+    { label: "8 px", value: be.md, style: { borderRadius: "8px" } },
+    { label: "All the way radius", value: be.full, style: { borderRadius: "32px" } }
   ];
-  return /* @__PURE__ */ n.jsxs("div", { style: {
+  return /* @__PURE__ */ t.jsxs("div", { style: {
     backgroundColor: "#010101",
     padding: "80px",
     fontFamily: "Inter, system-ui, sans-serif",
     minHeight: "100vh"
   }, children: [
-    /* @__PURE__ */ n.jsxs("div", { style: { marginBottom: "68px" }, children: [
-      /* @__PURE__ */ n.jsxs("div", { style: {
+    /* @__PURE__ */ t.jsxs("div", { style: { marginBottom: "68px" }, children: [
+      /* @__PURE__ */ t.jsxs("div", { style: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: "48px"
       }, children: [
-        /* @__PURE__ */ n.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "4px" }, children: [
-          /* @__PURE__ */ n.jsx("span", { style: {
+        /* @__PURE__ */ t.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "4px" }, children: [
+          /* @__PURE__ */ t.jsx("span", { style: {
             color: "#F0F0F0",
             fontSize: "20px",
             fontWeight: 700
           }, children: "Foundations" }),
-          /* @__PURE__ */ n.jsx("span", { style: { color: "#F0F0F0", fontSize: "20px" }, children: "›" }),
-          /* @__PURE__ */ n.jsx("span", { style: {
+          /* @__PURE__ */ t.jsx("span", { style: { color: "#F0F0F0", fontSize: "20px" }, children: "›" }),
+          /* @__PURE__ */ t.jsx("span", { style: {
             color: "#F0F0F0",
             fontSize: "20px",
             fontWeight: 700
           }, children: "Grid & Spacing" })
         ] }),
-        /* @__PURE__ */ n.jsx("span", { style: {
+        /* @__PURE__ */ t.jsx("span", { style: {
           color: "#F0F0F0",
           fontSize: "20px",
           fontWeight: 700,
           textDecoration: "underline"
         }, children: "StoryBook Link" })
       ] }),
-      /* @__PURE__ */ n.jsxs("div", { style: { maxWidth: "1620px" }, children: [
-        /* @__PURE__ */ n.jsx("h1", { style: {
+      /* @__PURE__ */ t.jsxs("div", { style: { maxWidth: "1620px" }, children: [
+        /* @__PURE__ */ t.jsx("h1", { style: {
           fontFamily: "Sora, system-ui, sans-serif",
           fontWeight: 600,
           fontSize: "72px",
@@ -844,7 +936,7 @@ const br = ({
           margin: "0 0 48px 0",
           width: "900px"
         }, children: "Grid & Spacing" }),
-        /* @__PURE__ */ n.jsx("p", { style: {
+        /* @__PURE__ */ t.jsx("p", { style: {
           fontFamily: "Inter, system-ui, sans-serif",
           fontWeight: 400,
           fontSize: "20px",
@@ -856,67 +948,67 @@ const br = ({
         }, children: "Layout grids establish structure, hierarchy, and alignment across the interface. Consistent spacing reinforces visual rhythm and clarity, enhancing readability and creating balanced, well-organized designs." })
       ] })
     ] }),
-    /* @__PURE__ */ n.jsxs("div", { style: { display: "flex", gap: "200px" }, children: [
-      m && /* @__PURE__ */ n.jsxs("div", { style: { width: "354px" }, children: [
-        /* @__PURE__ */ n.jsx("h2", { style: {
+    /* @__PURE__ */ t.jsxs("div", { style: { display: "flex", gap: "200px" }, children: [
+      d && /* @__PURE__ */ t.jsxs("div", { style: { width: "354px" }, children: [
+        /* @__PURE__ */ t.jsx("h2", { style: {
           fontSize: "24px",
           fontWeight: 700,
           color: "rgba(255, 255, 255, 0.92)",
           marginBottom: "24px",
           margin: "0 0 24px 0"
         }, children: "Spacers" }),
-        /* @__PURE__ */ n.jsx("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: p.map((v, R) => /* @__PURE__ */ n.jsxs("div", { children: [
-          /* @__PURE__ */ n.jsx("div", { style: {
+        /* @__PURE__ */ t.jsx("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: g.map((x, F) => /* @__PURE__ */ t.jsxs("div", { children: [
+          /* @__PURE__ */ t.jsx("div", { style: {
             backgroundColor: "#3F3F2B",
-            height: v.value,
+            height: x.value,
             width: "100%",
             marginBottom: "8px"
           } }),
-          /* @__PURE__ */ n.jsx("span", { style: {
+          /* @__PURE__ */ t.jsx("span", { style: {
             fontSize: "16px",
             fontWeight: 700,
             color: "rgba(255, 255, 255, 0.92)"
-          }, children: v.label })
-        ] }, R)) })
+          }, children: x.label })
+        ] }, F)) })
       ] }),
-      g && /* @__PURE__ */ n.jsxs("div", { children: [
-        /* @__PURE__ */ n.jsx("h2", { style: {
+      p && /* @__PURE__ */ t.jsxs("div", { children: [
+        /* @__PURE__ */ t.jsx("h2", { style: {
           fontSize: "24px",
           fontWeight: 700,
           color: "rgba(255, 255, 255, 0.92)",
           marginBottom: "24px",
           margin: "0 0 24px 0"
         }, children: "Radius" }),
-        /* @__PURE__ */ n.jsx("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: d.map((v, R) => /* @__PURE__ */ n.jsxs("div", { children: [
-          /* @__PURE__ */ n.jsx("div", { style: {
+        /* @__PURE__ */ t.jsx("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: l.map((x, F) => /* @__PURE__ */ t.jsxs("div", { children: [
+          /* @__PURE__ */ t.jsx("div", { style: {
             backgroundColor: "#3F3F2B",
             height: "32px",
             width: "80px",
             marginBottom: "8px",
             border: "2px dashed #F1FF6C",
-            ...v.style
+            ...x.style
           } }),
-          /* @__PURE__ */ n.jsx("span", { style: {
+          /* @__PURE__ */ t.jsx("span", { style: {
             fontSize: "16px",
             fontWeight: 700,
             color: "rgba(255, 255, 255, 0.92)"
-          }, children: v.label })
-        ] }, R)) })
+          }, children: x.label })
+        ] }, F)) })
       ] })
     ] })
   ] });
-}, xr = ({ color: m, label: g, colorCode: p, size: d = "normal" }) => {
-  const v = {
-    backgroundColor: m,
-    width: d === "large" ? "200px" : "176px",
+}, vt = ({ color: d, label: p, colorCode: g, size: l = "normal" }) => {
+  const x = {
+    backgroundColor: d,
+    width: l === "large" ? "200px" : "176px",
     height: "80px",
     borderRadius: "8px",
     marginBottom: "16px",
-    border: m === "#010101" ? "1px solid #ffffff" : "none"
+    border: d === "#010101" ? "1px solid #ffffff" : "none"
   };
-  return /* @__PURE__ */ n.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start" }, children: [
-    /* @__PURE__ */ n.jsx("div", { style: v }),
-    /* @__PURE__ */ n.jsxs("div", { style: {
+  return /* @__PURE__ */ t.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start" }, children: [
+    /* @__PURE__ */ t.jsx("div", { style: x }),
+    /* @__PURE__ */ t.jsxs("div", { style: {
       display: "flex",
       justifyContent: "space-between",
       width: "100%",
@@ -925,26 +1017,26 @@ const br = ({
       fontWeight: 700,
       color: "rgba(255, 255, 255, 0.92)"
     }, children: [
-      /* @__PURE__ */ n.jsx("span", { children: g }),
-      /* @__PURE__ */ n.jsx("span", { children: p })
+      /* @__PURE__ */ t.jsx("span", { children: p }),
+      /* @__PURE__ */ t.jsx("span", { children: g })
     ] })
   ] });
-}, Y = ({ title: m, description: g, colors: p }) => /* @__PURE__ */ n.jsx("div", { style: { marginBottom: "40px" }, children: /* @__PURE__ */ n.jsxs("div", { style: { display: "flex", gap: "52px", alignItems: "flex-start" }, children: [
-  /* @__PURE__ */ n.jsxs("div", { style: {
+}, ue = ({ title: d, description: p, colors: g }) => /* @__PURE__ */ t.jsx("div", { style: { marginBottom: "40px" }, children: /* @__PURE__ */ t.jsxs("div", { style: { display: "flex", gap: "52px", alignItems: "flex-start" }, children: [
+  /* @__PURE__ */ t.jsxs("div", { style: {
     width: "406px",
     display: "flex",
     flexDirection: "column",
     gap: "12px"
   }, children: [
-    /* @__PURE__ */ n.jsx("h3", { style: {
+    /* @__PURE__ */ t.jsx("h3", { style: {
       fontFamily: "Inter, system-ui, sans-serif",
       fontSize: "24px",
       fontWeight: 700,
       color: "rgba(255, 255, 255, 0.92)",
       margin: 0,
       lineHeight: 1.4
-    }, children: m }),
-    /* @__PURE__ */ n.jsx("p", { style: {
+    }, children: d }),
+    /* @__PURE__ */ t.jsx("p", { style: {
       fontFamily: "Inter, system-ui, sans-serif",
       fontSize: "20px",
       fontWeight: 400,
@@ -952,91 +1044,91 @@ const br = ({
       margin: 0,
       lineHeight: 1.4,
       letterSpacing: "-0.4px"
-    }, children: g })
+    }, children: p })
   ] }),
-  /* @__PURE__ */ n.jsx("div", { style: {
+  /* @__PURE__ */ t.jsx("div", { style: {
     display: "flex",
     gap: "16px",
     flexWrap: "wrap",
     flex: 1
-  }, children: p.map((d, v) => /* @__PURE__ */ n.jsx(
-    xr,
+  }, children: g.map((l, x) => /* @__PURE__ */ t.jsx(
+    vt,
     {
-      color: d.color,
-      label: d.label,
-      colorCode: d.code
+      color: l.color,
+      label: l.label,
+      colorCode: l.code
     },
-    v
+    x
   )) })
-] }) }), Fr = () => {
-  const m = [
-    { label: "100", color: s.primary[100], code: "#F1FF6C" },
-    { label: "300 (Base)", color: s.primary[300], code: "#E5FF00" },
-    { label: "500", color: s.primary[500], code: "#B9D300" },
-    { label: "700", color: s.primary[700], code: "#3F3F2B" },
-    { label: "900", color: s.primary[900], code: "#333333" }
-  ], g = [
-    { label: "0", color: s.neutral[0], code: "#FFFFFF" },
-    { label: "100", color: s.neutral[100], code: "#F0F0F0" },
-    { label: "200", color: s.neutral[200], code: "#BABABA" },
-    { label: "300", color: s.neutral[300], code: "#8E8E8E" },
-    { label: "400", color: s.neutral[400], code: "#616161" },
-    { label: "500", color: s.neutral[500], code: "#404040" },
-    { label: "600", color: s.neutral[600], code: "#333333" },
-    { label: "700", color: s.neutral[700], code: "#282828" },
-    { label: "800", color: s.neutral[800], code: "#181818" },
-    { label: "900", color: s.neutral[900], code: "#010101" }
+] }) }), Rt = () => {
+  const d = [
+    { label: "100", color: r.primary[100], code: "#F1FF6C" },
+    { label: "300 (Base)", color: r.primary[300], code: "#E5FF00" },
+    { label: "500", color: r.primary[500], code: "#B9D300" },
+    { label: "700", color: r.primary[700], code: "#3F3F2B" },
+    { label: "900", color: r.primary[900], code: "#333333" }
   ], p = [
-    { label: "100", color: s.alert[100], code: "#FF5368" },
-    { label: "300", color: s.alert[300], code: "#FF364E" },
-    { label: "500", color: s.alert[500], code: "#AF001B" },
-    { label: "700", color: s.alert[700], code: "#500009" }
-  ], d = [
-    { label: "100", color: s.warning[100], code: "#FFCE66" },
-    { label: "300", color: s.warning[300], code: "#FFAE00" },
-    { label: "500", color: s.warning[500], code: "#B27A00" },
-    { label: "700", color: s.warning[700], code: "#805700" }
-  ], v = [
-    { label: "100", color: s.success[100], code: "#00E5A0" },
-    { label: "300", color: s.success[300], code: "#00B27C" },
-    { label: "500", color: s.success[500], code: "#007F58" },
-    { label: "700", color: s.success[700], code: "#006547" }
+    { label: "0", color: r.neutral[0], code: "#FFFFFF" },
+    { label: "100", color: r.neutral[100], code: "#F0F0F0" },
+    { label: "200", color: r.neutral[200], code: "#BABABA" },
+    { label: "300", color: r.neutral[300], code: "#8E8E8E" },
+    { label: "400", color: r.neutral[400], code: "#616161" },
+    { label: "500", color: r.neutral[500], code: "#404040" },
+    { label: "600", color: r.neutral[600], code: "#333333" },
+    { label: "700", color: r.neutral[700], code: "#282828" },
+    { label: "800", color: r.neutral[800], code: "#181818" },
+    { label: "900", color: r.neutral[900], code: "#010101" }
+  ], g = [
+    { label: "100", color: r.alert[100], code: "#FF5368" },
+    { label: "300", color: r.alert[300], code: "#FF364E" },
+    { label: "500", color: r.alert[500], code: "#AF001B" },
+    { label: "700", color: r.alert[700], code: "#500009" }
+  ], l = [
+    { label: "100", color: r.warning[100], code: "#FFCE66" },
+    { label: "300", color: r.warning[300], code: "#FFAE00" },
+    { label: "500", color: r.warning[500], code: "#B27A00" },
+    { label: "700", color: r.warning[700], code: "#805700" }
+  ], x = [
+    { label: "100", color: r.success[100], code: "#00E5A0" },
+    { label: "300", color: r.success[300], code: "#00B27C" },
+    { label: "500", color: r.success[500], code: "#007F58" },
+    { label: "700", color: r.success[700], code: "#006547" }
   ];
-  return /* @__PURE__ */ n.jsxs("div", { style: {
+  return /* @__PURE__ */ t.jsxs("div", { style: {
     backgroundColor: "#010101",
     padding: "80px",
     fontFamily: "Inter, system-ui, sans-serif",
     minHeight: "100vh"
   }, children: [
-    /* @__PURE__ */ n.jsxs("div", { style: { marginBottom: "68px" }, children: [
-      /* @__PURE__ */ n.jsxs("div", { style: {
+    /* @__PURE__ */ t.jsxs("div", { style: { marginBottom: "68px" }, children: [
+      /* @__PURE__ */ t.jsxs("div", { style: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: "48px"
       }, children: [
-        /* @__PURE__ */ n.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "4px" }, children: [
-          /* @__PURE__ */ n.jsx("span", { style: {
+        /* @__PURE__ */ t.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "4px" }, children: [
+          /* @__PURE__ */ t.jsx("span", { style: {
             color: "#F0F0F0",
             fontSize: "20px",
             fontWeight: 700
           }, children: "Foundations" }),
-          /* @__PURE__ */ n.jsx("span", { style: { color: "#F0F0F0", fontSize: "20px" }, children: "›" }),
-          /* @__PURE__ */ n.jsx("span", { style: {
+          /* @__PURE__ */ t.jsx("span", { style: { color: "#F0F0F0", fontSize: "20px" }, children: "›" }),
+          /* @__PURE__ */ t.jsx("span", { style: {
             color: "#F0F0F0",
             fontSize: "20px",
             fontWeight: 700
           }, children: "Colors" })
         ] }),
-        /* @__PURE__ */ n.jsx("span", { style: {
+        /* @__PURE__ */ t.jsx("span", { style: {
           color: "#F0F0F0",
           fontSize: "20px",
           fontWeight: 700,
           textDecoration: "underline"
         }, children: "StoryBook Link" })
       ] }),
-      /* @__PURE__ */ n.jsxs("div", { style: { maxWidth: "1620px" }, children: [
-        /* @__PURE__ */ n.jsx("h1", { style: {
+      /* @__PURE__ */ t.jsxs("div", { style: { maxWidth: "1620px" }, children: [
+        /* @__PURE__ */ t.jsx("h1", { style: {
           fontFamily: "Sora, system-ui, sans-serif",
           fontWeight: 600,
           fontSize: "72px",
@@ -1044,7 +1136,7 @@ const br = ({
           color: "#E5FF00",
           margin: "0 0 48px 0"
         }, children: "Colors" }),
-        /* @__PURE__ */ n.jsxs("div", { style: {
+        /* @__PURE__ */ t.jsxs("div", { style: {
           fontFamily: "Inter, system-ui, sans-serif",
           fontSize: "20px",
           lineHeight: 1.4,
@@ -1052,21 +1144,21 @@ const br = ({
           letterSpacing: "-0.4px",
           marginBottom: "20px"
         }, children: [
-          /* @__PURE__ */ n.jsxs("p", { style: { margin: "0 0 20px 0" }, children: [
+          /* @__PURE__ */ t.jsxs("p", { style: { margin: "0 0 20px 0" }, children: [
             "WSC Sports' design system will feature a dynamic and energetic color palette inspired by the intensity of athletic competition. Bold ",
-            /* @__PURE__ */ n.jsx("strong", { children: "primary colors" }),
+            /* @__PURE__ */ t.jsx("strong", { children: "primary colors" }),
             " will enhance visibility and clarity, while sleek ",
-            /* @__PURE__ */ n.jsx("strong", { children: "neutral tones" }),
+            /* @__PURE__ */ t.jsx("strong", { children: "neutral tones" }),
             " provide balance and professionalism. ",
-            /* @__PURE__ */ n.jsx("strong", { children: "Supporting colors" }),
+            /* @__PURE__ */ t.jsx("strong", { children: "Supporting colors" }),
             " will add depth and flexibility, guiding user focus and reinforcing key actions."
           ] }),
-          /* @__PURE__ */ n.jsx("p", { style: { margin: 0 }, children: "The combination ensures a modern, high-performance aesthetic, aligning with the fast-paced world of sports." })
+          /* @__PURE__ */ t.jsx("p", { style: { margin: 0 }, children: "The combination ensures a modern, high-performance aesthetic, aligning with the fast-paced world of sports." })
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ n.jsxs("div", { style: { marginBottom: "40px" }, children: [
-      /* @__PURE__ */ n.jsx("h2", { style: {
+    /* @__PURE__ */ t.jsxs("div", { style: { marginBottom: "40px" }, children: [
+      /* @__PURE__ */ t.jsx("h2", { style: {
         fontSize: "24px",
         fontWeight: 700,
         color: "rgba(255, 255, 255, 0.92)",
@@ -1074,55 +1166,1093 @@ const br = ({
         fontFamily: "Inter, system-ui, sans-serif",
         letterSpacing: "-0.48px"
       }, children: "Primary Colors" }),
-      /* @__PURE__ */ n.jsx(
-        Y,
+      /* @__PURE__ */ t.jsx(
+        ue,
         {
           title: "Primary",
           description: "The primary color is our brand color, shaping the look and feel across interactive elements like buttons, links, and inputs.",
-          colors: m
+          colors: d
         }
       )
     ] }),
-    /* @__PURE__ */ n.jsx(
-      Y,
+    /* @__PURE__ */ t.jsx(
+      ue,
       {
         title: "Neutral",
         description: "Neutral color anchors the system; nearly every UI element- text, form fields, surfaces, and dividers- displays natural hues.",
-        colors: g
-      }
-    ),
-    /* @__PURE__ */ n.jsx(
-      Y,
-      {
-        title: "Alert",
-        description: "Error colors signal negative or destructive actions, marking error states like action failures, lost connections, etc.",
         colors: p
       }
     ),
-    /* @__PURE__ */ n.jsx(
-      Y,
+    /* @__PURE__ */ t.jsx(
+      ue,
+      {
+        title: "Alert",
+        description: "Error colors signal negative or destructive actions, marking error states like action failures, lost connections, etc.",
+        colors: g
+      }
+    ),
+    /* @__PURE__ */ t.jsx(
+      ue,
       {
         title: "Warning",
         description: "Warning colors indicate that an action may be destructive or on hold, grabbing user attention in confirmations.",
-        colors: d
+        colors: l
       }
     ),
-    /* @__PURE__ */ n.jsx(
-      Y,
+    /* @__PURE__ */ t.jsx(
+      ue,
       {
         title: "Success",
         description: "Success colors communicate a positive action, positive trend, or a successful confirmation.",
-        colors: v
+        colors: x
+      }
+    )
+  ] });
+}, H = ({
+  label: d,
+  size: p,
+  weight: g,
+  lineHeight: l,
+  usage: x,
+  fontSize: F
+}) => {
+  const C = {
+    fontFamily: "Inter, system-ui, sans-serif",
+    fontSize: F,
+    lineHeight: "1.4",
+    color: r.neutral[100],
+    width: "400px",
+    margin: 0,
+    padding: 0
+  };
+  return /* @__PURE__ */ t.jsxs("div", { style: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "48px",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    padding: 0,
+    width: "100%"
+  }, children: [
+    /* @__PURE__ */ t.jsxs("div", { style: {
+      display: "flex",
+      flexDirection: "row",
+      height: "36px",
+      alignItems: "flex-start",
+      justifyContent: "flex-start",
+      padding: 0,
+      width: "100%",
+      position: "relative"
+    }, children: [
+      /* @__PURE__ */ t.jsx("div", { style: {
+        position: "absolute",
+        borderBottom: `1px solid ${r.neutral[100]}`,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        pointerEvents: "none"
+      } }),
+      /* @__PURE__ */ t.jsx("div", { style: {
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontWeight: 400,
+        fontSize: "20px",
+        lineHeight: "25px",
+        color: r.neutral[100],
+        width: "2200px"
+      }, children: d })
+    ] }),
+    /* @__PURE__ */ t.jsxs("div", { style: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      padding: 0,
+      width: "100%"
+    }, children: [
+      /* @__PURE__ */ t.jsx("div", { style: {
+        ...C,
+        fontWeight: 400
+      }, children: d }),
+      /* @__PURE__ */ t.jsx("div", { style: {
+        ...C,
+        fontWeight: 600
+      }, children: d }),
+      /* @__PURE__ */ t.jsx("div", { style: {
+        ...C,
+        fontWeight: 700
+      }, children: d }),
+      /* @__PURE__ */ t.jsxs("div", { style: {
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontWeight: 400,
+        fontSize: "24px",
+        lineHeight: "1.4",
+        color: r.neutral[100],
+        width: "440px",
+        height: "136px"
+      }, children: [
+        /* @__PURE__ */ t.jsxs("p", { style: { margin: 0, marginBottom: "0px" }, children: [
+          "Font size: ",
+          p
+        ] }),
+        /* @__PURE__ */ t.jsxs("p", { style: { margin: 0, marginBottom: "0px" }, children: [
+          "Weight: ",
+          g
+        ] }),
+        /* @__PURE__ */ t.jsxs("p", { style: { margin: 0 }, children: [
+          "Line height: ",
+          l
+        ] })
+      ] }),
+      /* @__PURE__ */ t.jsx("div", { style: {
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontWeight: 400,
+        fontSize: "24px",
+        lineHeight: "1.4",
+        color: r.neutral[100],
+        width: "560px",
+        height: "136px"
+      }, children: /* @__PURE__ */ t.jsx("p", { style: { margin: 0 }, children: x }) })
+    ] })
+  ] });
+}, kt = ({ className: d }) => /* @__PURE__ */ t.jsxs(
+  "div",
+  {
+    className: d,
+    style: {
+      backgroundColor: r.neutral[900],
+      width: "100%",
+      minHeight: "100vh",
+      position: "relative",
+      fontFamily: "Inter, system-ui, sans-serif"
+    },
+    children: [
+      /* @__PURE__ */ t.jsxs("div", { style: {
+        backgroundColor: r.neutral[900],
+        display: "flex",
+        flexDirection: "column",
+        gap: "68px",
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        minWidth: "2400px",
+        paddingBottom: "96px",
+        paddingTop: "80px",
+        paddingLeft: "80px",
+        paddingRight: "80px",
+        position: "relative",
+        borderTop: `5px solid ${r.neutral[100]}`
+      }, children: [
+        /* @__PURE__ */ t.jsxs("div", { style: {
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: 0,
+          width: "100%"
+        }, children: [
+          /* @__PURE__ */ t.jsxs("div", { style: {
+            display: "flex",
+            flexDirection: "row",
+            gap: "4px",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            padding: 0
+          }, children: [
+            /* @__PURE__ */ t.jsx("div", { style: {
+              fontFamily: "Inter, system-ui, sans-serif",
+              fontWeight: 700,
+              fontSize: "20px",
+              lineHeight: "1.4",
+              color: r.neutral[100]
+            }, children: "Foundations" }),
+            /* @__PURE__ */ t.jsx("div", { style: {
+              width: "24px",
+              height: "24px",
+              position: "relative"
+            }, children: /* @__PURE__ */ t.jsx("div", { style: {
+              position: "absolute",
+              top: "25%",
+              left: "33.333%",
+              right: "35.833%",
+              bottom: "25%",
+              width: "8px",
+              height: "12px",
+              backgroundColor: r.neutral[100],
+              clipPath: "polygon(0 0, 100% 50%, 0 100%)"
+            } }) }),
+            /* @__PURE__ */ t.jsx("div", { style: {
+              fontFamily: "Inter, system-ui, sans-serif",
+              fontWeight: 700,
+              fontSize: "20px",
+              lineHeight: "1.4",
+              color: r.neutral[100]
+            }, children: "Typography" })
+          ] }),
+          /* @__PURE__ */ t.jsx("div", { style: {
+            fontFamily: "Inter, system-ui, sans-serif",
+            fontWeight: 700,
+            fontSize: "20px",
+            lineHeight: "1.4",
+            color: r.neutral[100],
+            textDecoration: "underline"
+          }, children: "StoryBook Link" })
+        ] }),
+        /* @__PURE__ */ t.jsxs("div", { style: {
+          display: "flex",
+          flexDirection: "column",
+          gap: "48px",
+          alignItems: "flex-start",
+          justifyContent: "flex-start",
+          maxWidth: "1620px",
+          padding: 0
+        }, children: [
+          /* @__PURE__ */ t.jsx("div", { style: {
+            fontFamily: "Sora, system-ui, sans-serif",
+            fontWeight: 600,
+            fontSize: "72px",
+            lineHeight: "90px",
+            color: r.primary[300],
+            width: "900px"
+          }, children: "Typography" }),
+          /* @__PURE__ */ t.jsxs("div", { style: {
+            fontFamily: "Inter, system-ui, sans-serif",
+            fontWeight: 400,
+            fontSize: "20px",
+            lineHeight: "1.6",
+            color: r.neutral[100],
+            letterSpacing: "-0.4px",
+            width: "100%",
+            minWidth: "100%"
+          }, children: [
+            /* @__PURE__ */ t.jsx("p", { style: { margin: 0, marginBottom: "0px" }, children: "Typography defines the visual hierarchy and tone of the interface. It ensures consistency in font styles, sizes, and spacing across all products and platforms." }),
+            /* @__PURE__ */ t.jsxs("p", { style: { margin: 0, marginBottom: "0px" }, children: [
+              /* @__PURE__ */ t.jsx("span", { style: { fontWeight: 600 }, children: "Regular (400)" }),
+              /* @__PURE__ */ t.jsx("span", { style: { fontWeight: 600 }, children: " – " }),
+              /* @__PURE__ */ t.jsx("span", { children: "Used for body text, long-form content, descriptions, and supporting text." })
+            ] }),
+            /* @__PURE__ */ t.jsxs("p", { style: { margin: 0, marginBottom: "0px" }, children: [
+              /* @__PURE__ */ t.jsx("span", { style: { fontWeight: 600 }, children: "Semi-Bold (600)" }),
+              /* @__PURE__ */ t.jsx("span", { style: { fontWeight: 600 }, children: " – " }),
+              /* @__PURE__ */ t.jsx("span", { children: "Used for subheadings, form labels, or emphasis within body text." })
+            ] }),
+            /* @__PURE__ */ t.jsxs("p", { style: { margin: 0 }, children: [
+              /* @__PURE__ */ t.jsx("span", { style: { fontWeight: 600 }, children: "Bold (700)" }),
+              /* @__PURE__ */ t.jsx("span", { style: { fontWeight: 600 }, children: " – " }),
+              /* @__PURE__ */ t.jsx("span", { children: "Reserved for headings, section titles, and button label." })
+            ] })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ t.jsxs("div", { style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "48px",
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        paddingLeft: "80px",
+        paddingTop: "40px",
+        color: r.neutral[100]
+      }, children: [
+        /* @__PURE__ */ t.jsxs("div", { style: {
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+          alignItems: "flex-start",
+          justifyContent: "flex-start",
+          padding: 0
+        }, children: [
+          /* @__PURE__ */ t.jsx("div", { style: {
+            fontFamily: "Sora, system-ui, sans-serif",
+            fontWeight: 400,
+            fontSize: "48px",
+            lineHeight: "90px",
+            color: r.neutral[100],
+            width: "900px"
+          }, children: "Inter" }),
+          /* @__PURE__ */ t.jsx("div", { style: {
+            fontFamily: "Inter, system-ui, sans-serif",
+            fontWeight: 400,
+            fontSize: "120px",
+            lineHeight: "1.4",
+            color: r.neutral[100],
+            width: "900px"
+          }, children: "Aa" })
+        ] }),
+        /* @__PURE__ */ t.jsx("div", { style: {
+          fontFamily: "Inter, system-ui, sans-serif",
+          fontWeight: 400,
+          fontSize: "48px",
+          lineHeight: "1.4",
+          color: r.neutral[100],
+          width: "900px"
+        }, children: /* @__PURE__ */ t.jsxs("p", { style: { margin: 0 }, children: [
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+          /* @__PURE__ */ t.jsx("br", {}),
+          "abcdefghijklmnopqrstuvwxyz",
+          /* @__PURE__ */ t.jsx("br", {}),
+          "0123456789 !@#$%^&*()"
+        ] }) })
+      ] }),
+      /* @__PURE__ */ t.jsxs("div", { style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "64px",
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        paddingLeft: "80px",
+        paddingTop: "80px",
+        paddingBottom: "80px",
+        width: "2199px"
+      }, children: [
+        /* @__PURE__ */ t.jsx(
+          H,
+          {
+            label: "Headline 1",
+            size: "40px | 2.857 rem",
+            weight: "400, 600 ,700",
+            lineHeight: "140%",
+            usage: "Used for large, attention-grabbing headlines in promotional areas or in rules system.",
+            fontSize: "40px"
+          }
+        ),
+        /* @__PURE__ */ t.jsx(
+          H,
+          {
+            label: "Headline 2",
+            size: "32px / 2.286rem",
+            weight: "400, 600 ,700",
+            lineHeight: "140%",
+            usage: "Used for page titles, section headers, and prominent UI headings.",
+            fontSize: "32px"
+          }
+        ),
+        /* @__PURE__ */ t.jsx(
+          H,
+          {
+            label: "Headline 3",
+            size: "24px | 1.714rem",
+            weight: "400, 600 ,700",
+            lineHeight: "140%",
+            usage: "Useful for page intros, grouped sections, or modal headlines.",
+            fontSize: "24px"
+          }
+        ),
+        /* @__PURE__ */ t.jsx(
+          H,
+          {
+            label: "Body XL",
+            size: "20px | 1.429rem",
+            weight: "400, 600 ,700",
+            lineHeight: "140%",
+            usage: "Used for subheadings, section intros, or supporting titles.",
+            fontSize: "20px"
+          }
+        ),
+        /* @__PURE__ */ t.jsx(
+          H,
+          {
+            label: "Body L",
+            size: "18px | 1.286rem",
+            weight: "400, 600 ,700",
+            lineHeight: "140%",
+            usage: "Used to emphasize body text or create light hierarchy above 16px. Ideal for callouts or key details.",
+            fontSize: "18px"
+          }
+        ),
+        /* @__PURE__ */ t.jsx(
+          H,
+          {
+            label: "Body M",
+            size: "16px | 1.143rem",
+            weight: "400, 600 ,700",
+            lineHeight: "140%",
+            usage: "Used for long-form content such as paragraphs and main descriptions, and main tabs labels",
+            fontSize: "16px"
+          }
+        ),
+        /* @__PURE__ */ t.jsx(
+          H,
+          {
+            label: "Body S",
+            size: "14px | 1 rem",
+            weight: "400, 600 ,700",
+            lineHeight: "140%",
+            usage: "Used for primary content like input text, labels, links, and secondary tabs labels",
+            fontSize: "14px"
+          }
+        ),
+        /* @__PURE__ */ t.jsx(
+          H,
+          {
+            label: "Body XS",
+            size: "12px | 0.857rem",
+            weight: "400, 600 ,700",
+            lineHeight: "140%",
+            usage: "Used for secondary information such as captions, helper text, timeline labels, or tooltips.",
+            fontSize: "12px"
+          }
+        ),
+        /* @__PURE__ */ t.jsx(
+          H,
+          {
+            label: "Label",
+            size: "11px | 0.786rem",
+            weight: "400, 600 ,700",
+            lineHeight: "140%",
+            usage: "Used for tab labels and chart metadata",
+            fontSize: "11px"
+          }
+        )
+      ] })
+    ]
+  }
+), _t = ({
+  children: d,
+  variant: p = "primary",
+  size: g = "medium",
+  disabled: l = !1,
+  fullWidth: x = !1,
+  onClick: F,
+  type: C = "button",
+  className: W,
+  style: v,
+  "aria-label": B,
+  ...j
+}) => {
+  const [_, E] = $.useState(!1), [O, P] = $.useState(!1), [V, U] = $.useState(!1), [S, m] = $.useState([]), D = $.useRef(null), ee = $.useRef(0), te = () => l ? "disabled" : O ? "active" : V ? "focused" : _ ? "hover" : "default", N = (s) => {
+    if (l || !D.current) return;
+    const A = D.current.getBoundingClientRect(), de = s.clientX - A.left, fe = s.clientY - A.top, pe = Math.max(A.width, A.height) * 2, he = {
+      id: ee.current++,
+      x: de,
+      y: fe,
+      size: pe,
+      variant: p || "primary"
+    };
+    m((ie) => [...ie, he]), setTimeout(() => {
+      m((ie) => ie.filter((ae) => ae.id !== he.id));
+    }, 600);
+  }, re = (s) => {
+    switch (s) {
+      case "primary":
+        return "rgba(51, 51, 51, 0.3)";
+      case "secondary":
+        return "rgba(229, 255, 0, 0.3)";
+      case "tertiary":
+        return "rgba(229, 255, 0, 0.3)";
+      case "alternative":
+        return "rgba(240, 240, 240, 0.3)";
+      case "alert":
+        return "rgba(240, 240, 240, 0.3)";
+      default:
+        return "rgba(51, 51, 51, 0.3)";
+    }
+  }, L = () => {
+    const s = te(), a = {
+      fontFamily: M.fontFamily.primary.join(", "),
+      fontSize: "14px",
+      fontWeight: M.fontWeight.bold,
+      lineHeight: "1.4",
+      border: "none",
+      borderRadius: "8px",
+      cursor: l ? "not-allowed" : "pointer",
+      transition: "all 0.2s cubic-bezier(0, 0, 0.2, 1)",
+      // Material motion curve
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textDecoration: "none",
+      outline: "none",
+      position: "relative",
+      width: x ? "100%" : "auto",
+      minWidth: "64px",
+      padding: "8px 16px",
+      height: "32px",
+      boxSizing: "border-box",
+      overflow: "hidden",
+      // Clip ripple to button shape
+      ...v
+    };
+    switch (p) {
+      case "primary":
+        switch (s) {
+          case "disabled":
+            return {
+              ...a,
+              backgroundColor: r.primary[700],
+              // #3F3F2B
+              color: r.neutral[300]
+              // #8E8E8E
+            };
+          case "active":
+            return {
+              ...a,
+              backgroundColor: r.primary[400],
+              // #C2FF00
+              color: r.primary[900]
+              // #333333
+            };
+          case "focused":
+            return {
+              ...a,
+              backgroundColor: r.primary[300],
+              // #E5FF00
+              color: r.primary[900],
+              // #333333
+              boxShadow: "0px 0px 0px 2px rgba(229, 255, 0, 0.4)"
+              // Focus ring from Figma
+            };
+          case "hover":
+            return {
+              ...a,
+              backgroundColor: r.primary[200],
+              // #F4FF99
+              color: r.primary[900]
+              // #333333
+            };
+          default:
+            return {
+              ...a,
+              backgroundColor: r.primary[300],
+              // #E5FF00
+              color: r.primary[900]
+              // #333333
+            };
+        }
+      case "secondary":
+        switch (s) {
+          case "disabled":
+            return {
+              ...a,
+              backgroundColor: "transparent",
+              color: r.primary[700],
+              // #3F3F2B
+              border: `1px solid ${r.primary[700]}`
+              // #3F3F2B
+            };
+          case "active":
+            return {
+              ...a,
+              backgroundColor: r.neutral[700],
+              // #282828
+              color: r.primary[400],
+              // #C2FF00
+              border: `1px solid ${r.primary[400]}`
+              // #C2FF00
+            };
+          case "focused":
+            return {
+              ...a,
+              backgroundColor: r.neutral[900],
+              // #010101
+              color: r.primary[300],
+              // #E5FF00
+              border: `1px solid ${r.primary[300]}`,
+              // #E5FF00
+              boxShadow: "0px 0px 0px 2px rgba(229, 255, 0, 0.4)"
+              // Focus ring from Figma
+            };
+          case "hover":
+            return {
+              ...a,
+              backgroundColor: r.neutral[600],
+              // #333333
+              color: r.primary[200],
+              // #F4FF99
+              border: `1px solid ${r.primary[200]}`
+              // #F4FF99
+            };
+          default:
+            return {
+              ...a,
+              backgroundColor: "transparent",
+              color: r.primary[300],
+              // #E5FF00
+              border: `1px solid ${r.primary[300]}`
+              // #E5FF00
+            };
+        }
+      case "tertiary":
+        switch (s) {
+          case "disabled":
+            return {
+              ...a,
+              backgroundColor: "transparent",
+              color: r.primary[700]
+              // #3F3F2B
+            };
+          case "active":
+            return {
+              ...a,
+              backgroundColor: r.neutral[700],
+              // #282828
+              color: r.primary[400]
+              // #C2FF00
+            };
+          case "focused":
+            return {
+              ...a,
+              backgroundColor: r.neutral[900],
+              // #010101
+              color: r.primary[300],
+              // #E5FF00
+              boxShadow: "0px 0px 0px 2px rgba(229, 255, 0, 0.4)"
+              // Focus ring from Figma
+            };
+          case "hover":
+            return {
+              ...a,
+              backgroundColor: r.neutral[600],
+              // #333333
+              color: r.primary[200]
+              // #F4FF99
+            };
+          default:
+            return {
+              ...a,
+              backgroundColor: "transparent",
+              color: r.primary[300]
+              // #E5FF00
+            };
+        }
+      case "alternative":
+        switch (s) {
+          case "disabled":
+            return {
+              ...a,
+              backgroundColor: r.neutral[800],
+              // #181818
+              color: r.neutral[700]
+              // #282828
+            };
+          case "active":
+            return {
+              ...a,
+              backgroundColor: r.neutral[700],
+              // #282828
+              color: r.primary[400]
+              // #C2FF00
+            };
+          case "focused":
+            return {
+              ...a,
+              backgroundColor: r.neutral[700],
+              // #282828
+              color: r.neutral[100],
+              // #F0F0F0
+              boxShadow: "0px 0px 0px 2px rgba(229, 255, 0, 0.4)"
+              // Focus ring from Figma
+            };
+          case "hover":
+            return {
+              ...a,
+              backgroundColor: r.neutral[600],
+              // #333333
+              color: r.neutral[100]
+              // #F0F0F0
+            };
+          default:
+            return {
+              ...a,
+              backgroundColor: r.neutral[700],
+              // #282828
+              color: r.neutral[100]
+              // #F0F0F0
+            };
+        }
+      case "alert":
+        switch (s) {
+          case "disabled":
+            return {
+              ...a,
+              backgroundColor: r.alert[900],
+              // #8E1616
+              color: r.neutral[200]
+              // #BABABA
+            };
+          case "active":
+            return {
+              ...a,
+              backgroundColor: r.alert[500],
+              // #B72C2C
+              color: r.neutral[100]
+              // #F0F0F0
+            };
+          case "focused":
+            return {
+              ...a,
+              backgroundColor: r.alert[300],
+              // #FF3131
+              color: r.neutral[100],
+              // #F0F0F0
+              boxShadow: "0px 0px 0px 2px #F0F0F0"
+              // White focus ring from Figma
+            };
+          case "hover":
+            return {
+              ...a,
+              backgroundColor: r.alert[100],
+              // #FF6161
+              color: r.neutral[100]
+              // #F0F0F0
+            };
+          default:
+            return {
+              ...a,
+              backgroundColor: r.alert[300],
+              // #FF3131
+              color: r.neutral[100]
+              // #F0F0F0
+            };
+        }
+      default:
+        return a;
+    }
+  }, X = () => {
+    l || E(!0);
+  }, ne = () => {
+    E(!1);
+  }, oe = (s) => {
+    l || (P(!0), N(s));
+  }, K = () => {
+    P(!1);
+  }, I = () => {
+    l || U(!0);
+  }, R = () => {
+    U(!1);
+  }, z = (s) => {
+    !l && F && F(s);
+  }, J = (s) => {
+    if ((s.key === " " || s.key === "Enter") && !l && (P(!0), D.current)) {
+      const a = D.current.getBoundingClientRect(), A = {
+        clientX: a.left + a.width / 2,
+        clientY: a.top + a.height / 2
+      };
+      N(A);
+    }
+  }, q = (s) => {
+    (s.key === " " || s.key === "Enter") && P(!1);
+  };
+  return /* @__PURE__ */ t.jsxs(t.Fragment, { children: [
+    /* @__PURE__ */ t.jsx("style", { children: `
+          @keyframes ripple {
+            0% {
+              transform: scale(0);
+              opacity: 0.6;
+            }
+            50% {
+              opacity: 0.3;
+            }
+            100% {
+              transform: scale(1);
+              opacity: 0;
+            }
+          }
+          
+          .ripple {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: ripple 600ms cubic-bezier(0, 0, 0.2, 1);
+          }
+        ` }),
+    /* @__PURE__ */ t.jsxs(
+      "button",
+      {
+        ref: D,
+        type: C,
+        className: W,
+        style: L(),
+        onClick: z,
+        onMouseEnter: X,
+        onMouseLeave: ne,
+        onMouseDown: oe,
+        onMouseUp: K,
+        onFocus: I,
+        onBlur: R,
+        onKeyDown: J,
+        onKeyUp: q,
+        disabled: l,
+        "aria-label": B,
+        "aria-pressed": O,
+        tabIndex: l ? -1 : 0,
+        role: "button",
+        ...j,
+        children: [
+          S.map((s) => /* @__PURE__ */ t.jsx(
+            "div",
+            {
+              className: "ripple",
+              style: {
+                left: s.x - s.size / 2,
+                top: s.y - s.size / 2,
+                width: s.size,
+                height: s.size,
+                backgroundColor: re(s.variant)
+              }
+            },
+            s.id
+          )),
+          d
+        ]
+      }
+    )
+  ] });
+}, jt = ({ size: d = 16, color: p = "#F0F0F0" }) => /* @__PURE__ */ t.jsx("svg", { width: d, height: d, viewBox: "0 0 16 16", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ t.jsx(
+  "path",
+  {
+    d: "M12 4L4 12M4 4L12 12",
+    stroke: p,
+    strokeWidth: "1.5",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }
+) });
+let Ft = 0;
+const It = ({
+  value: d = "",
+  onChange: p,
+  placeholder: g = "Add a name",
+  disabled: l = !1,
+  error: x = !1,
+  fullWidth: F = !1,
+  id: C,
+  name: W,
+  "aria-label": v,
+  className: B,
+  style: j,
+  ..._
+}) => {
+  const [E, O] = Me(!1), [P, V] = Me(!1), U = yt(null), S = $.useMemo(() => C || `text-input-${++Ft}`, [C]), m = (s) => {
+    p && p(s.target.value);
+  }, D = () => {
+    O(!0);
+  }, ee = () => {
+    O(!1);
+  }, te = () => {
+    l || V(!0);
+  }, N = () => {
+    V(!1);
+  }, re = () => {
+    p && p(""), U.current && U.current.focus();
+  }, L = () => l ? "disable" : x ? "error" : E && d ? "selected-filled" : E ? "selected" : d ? "filled" : P ? "hover" : "default", X = () => {
+    const s = L(), a = {
+      borderRadius: "8px",
+      padding: "8px",
+      border: "1px solid",
+      outline: "none",
+      transition: "all 0.2s ease",
+      display: "flex",
+      alignItems: "center",
+      position: "relative",
+      width: F ? "100%" : "240px",
+      minHeight: "37px",
+      // 21px content + 16px padding
+      boxSizing: "border-box",
+      cursor: l ? "not-allowed" : "text",
+      ...j
+    };
+    switch (s) {
+      case "hover":
+        return {
+          ...a,
+          backgroundColor: "#333333",
+          borderColor: "transparent"
+        };
+      case "selected":
+        return {
+          ...a,
+          backgroundColor: "#282828",
+          borderColor: "#ffffff"
+        };
+      case "selected-filled":
+        return {
+          ...a,
+          backgroundColor: "#282828",
+          borderColor: "#ffffff"
+        };
+      case "filled":
+        return {
+          ...a,
+          backgroundColor: "#282828",
+          borderColor: "#333333"
+        };
+      case "disable":
+        return {
+          ...a,
+          backgroundColor: "#181818",
+          borderColor: "#282828"
+        };
+      case "error":
+        return {
+          ...a,
+          backgroundColor: "#282828",
+          borderColor: "#ff3131"
+        };
+      default:
+        return {
+          ...a,
+          backgroundColor: "#282828",
+          borderColor: "#333333"
+        };
+    }
+  }, ne = () => {
+    switch (L()) {
+      case "hover":
+        return "#f0f0f0";
+      case "selected":
+        return "#8e8e8e";
+      case "selected-filled":
+        return "#f0f0f0";
+      case "filled":
+        return "#f0f0f0";
+      case "disable":
+        return "#5d5d5d";
+      case "error":
+        return "#f0f0f0";
+      default:
+        return "#bababa";
+    }
+  }, oe = () => {
+    switch (L()) {
+      case "hover":
+        return "#f0f0f0";
+      case "selected":
+        return "#8e8e8e";
+      case "disable":
+        return "#5d5d5d";
+      default:
+        return "#bababa";
+    }
+  }, K = X(), I = ne(), R = oe(), z = L(), J = (z === "selected" || z === "selected-filled" || z === "error") && E, q = z === "selected-filled";
+  return /* @__PURE__ */ t.jsxs(t.Fragment, { children: [
+    /* @__PURE__ */ t.jsx("style", { children: `
+          #${S} {
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            color: ${I} !important;
+            font-family: ${M.fontFamily.primary.join(", ")} !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            line-height: 1.4 !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            min-height: 21px !important;
+            caret-color: ${J ? "#E5FF00" : "transparent"} !important;
+          }
+          
+          #${S}::placeholder {
+            color: ${R} !important;
+            font-family: ${M.fontFamily.primary.join(", ")} !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            line-height: 1.4 !important;
+            opacity: 1 !important;
+          }
+          
+          #${S}::-webkit-input-placeholder {
+            color: ${R} !important;
+            font-family: ${M.fontFamily.primary.join(", ")} !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            line-height: 1.4 !important;
+            opacity: 1 !important;
+          }
+          
+          #${S}::-moz-placeholder {
+            color: ${R} !important;
+            font-family: ${M.fontFamily.primary.join(", ")} !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            line-height: 1.4 !important;
+            opacity: 1 !important;
+          }
+          
+          #${S}:-ms-input-placeholder {
+            color: ${R} !important;
+            font-family: ${M.fontFamily.primary.join(", ")} !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            line-height: 1.4 !important;
+            opacity: 1 !important;
+          }
+        ` }),
+    /* @__PURE__ */ t.jsx(
+      "div",
+      {
+        className: B,
+        style: K,
+        onMouseEnter: te,
+        onMouseLeave: N,
+        children: /* @__PURE__ */ t.jsxs("div", { style: {
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
+          gap: "2px"
+        }, children: [
+          /* @__PURE__ */ t.jsx("div", { style: {
+            flex: 1,
+            minWidth: 0,
+            display: "flex",
+            alignItems: "center",
+            height: "21px",
+            gap: "0px"
+          }, children: /* @__PURE__ */ t.jsx(
+            "input",
+            {
+              ref: U,
+              type: "text",
+              value: d,
+              onChange: m,
+              onFocus: D,
+              onBlur: ee,
+              placeholder: g,
+              disabled: l,
+              id: S,
+              name: W,
+              "aria-label": v,
+              ..._
+            }
+          ) }),
+          q && /* @__PURE__ */ t.jsx(
+            "button",
+            {
+              type: "button",
+              onClick: re,
+              style: {
+                background: "transparent",
+                border: "none",
+                padding: "2px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "2px",
+                width: "20px",
+                height: "20px",
+                flexShrink: 0,
+                marginLeft: "4px",
+                zIndex: 10
+              },
+              "aria-label": "Clear input",
+              children: /* @__PURE__ */ t.jsx(jt, { size: 12, color: "#F0F0F0" })
+            }
+          )
+        ] })
       }
     )
   ] });
 };
 export {
-  Fr as Colors,
-  br as Spacing,
-  H as borderRadius,
-  s as colors,
-  yr as getColor,
-  W as spacing,
-  mr as typography
+  _t as Button,
+  Rt as Colors,
+  Et as Spacing,
+  It as TextInput,
+  kt as Typography,
+  be as borderRadius,
+  r as colors,
+  wt as getColor,
+  Ct as getTypographyStyle,
+  Q as spacing,
+  M as typography
 };
