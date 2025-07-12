@@ -4,7 +4,7 @@ import React from 'react';
 
 const PurchaseSection = () => {
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-pastel-green via-pastel-purple to-pastel-pink relative overflow-hidden">
+    <section id="purchase-section" className="py-20 px-4 bg-gradient-to-br from-pastel-green via-pastel-purple to-pastel-pink relative overflow-hidden">
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-10 left-10 text-christmas-gold opacity-20 animate-gentle-float">
